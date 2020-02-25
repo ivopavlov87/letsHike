@@ -5,6 +5,7 @@ const passport = require("passport");
 
 const db = require('./config/keys').mongoURI
 const users = require("./routes/api/users");
+const hikes = require("./routes/api/hikes");
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 app.use("/api/users", users);
+app.use("/api/hikes", hikes);
 
 const port = process.env.PORT || 5000
 
