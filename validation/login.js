@@ -14,8 +14,10 @@ module.exports = function validateLoginInput(data) {
       } else {
         errors.email = "Email is invalid"
       }
-    } else {
+    } else if (Validator.isAlphanumeric(data.loginInput)) {
       data.username = data.loginInput;
+    } else {
+      errors.username = "Username can only contain letters or numbers"
     }
   
   data.password = validText(data.password) ? data.password : "";
