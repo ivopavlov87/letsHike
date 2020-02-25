@@ -1,12 +1,12 @@
 const Validator = require("validator");
-const validText = require("./validation_helpers");
+const { validText } = require("./validation_helpers");
 
 module.exports = function validateLoginInput(data) {
   let errors = {};
 
 
   data.username = validText(data.username) ? data.username : "";
-  // data.email = validText(data.email) ? data.email : "";
+  data.email = validText(data.email) ? data.email : "";
   data.password = validText(data.password) ? data.password : "";
 
   if (!data.username) {
@@ -17,6 +17,8 @@ module.exports = function validateLoginInput(data) {
     errors.username = "Username field is required";
   }
 
+  // DELETE
+  // UNLESS: figure out how to log in with *either* username or email
   // if (!Validator.isEmail(data.email)) {
   //   errors.email = "Email is invalid";
   // }

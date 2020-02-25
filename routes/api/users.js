@@ -1,6 +1,8 @@
+const keys = require("../../config/keys");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../../models/User");
 
@@ -46,19 +48,20 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
+  // YOU ARE HERE!!!!! TRYING TO MAKE USERNAME & EMAIL GOOD FOR LOGIN
   const { errors, isValid } = validateLoginInput(req.body);
 
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
-  User.findOne({ email }).then(user => {
+  User.findOne({ username }).then(user => {
     if (!user) {
       // Use the validations to send the error
-      errors.email = "User not found";
+      errors.user = "User not found";
       return res.status(404).json(errors);
     }
 

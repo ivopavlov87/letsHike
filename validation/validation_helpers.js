@@ -3,30 +3,86 @@ const validText = str => {
 };
 
 const hasSpecialChar = str => {
-  const specialChars = ['@', '%', '+', '!', '#', '$', '^', '?', ':', ',', '(', ')', '[', ']', '~', '-', '_', '.']
+  const specialChars = {
+                        '@' : true,
+                        '%' : true,
+                        '+' : true,
+                        '!' : true,
+                        '#' : true,
+                        '$' : true,
+                        '^' : true,
+                        '?' : true,
+                        ':' : true,
+                        ',' : true,
+                        '(' : true,
+                        ')' : true,
+                        '[' : true,
+                        ']' : true,
+                        '~' : true,
+                        '-' : true,
+                        '.' : true
+                      };
 
   for (let i = 0; i < str.length; i++){
-    if (specialChars.includes(str[i])) return true;
-  }
+    if (specialChars[str[i]]) return true;
+  };
 
   return false;
 }
 
 const hasNumber = str => {
-  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  const numbers = {
+                    '0' : true,
+                    '1' : true,
+                    '2' : true,
+                    '3' : true,
+                    '4' : true,
+                    '5' : true,
+                    '6' : true,
+                    '7' : true,
+                    '8' : true,
+                    '9' : true
+                  }
 
   for (let i = 0; i < str.length; i++){
-    if (numbers.includes(str[i])) return true;
+    if (numbers[str[i]]) return true;
   }
 
   return false;
 }
 
 const hasCapital = str => {
-  const caps = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  const caps = {
+                'A': true,
+                'B': true,
+                'C': true,
+                'D': true,
+                'E': true,
+                'F': true,
+                'G': true,
+                'H': true,
+                'I': true,
+                'J': true,
+                'K': true,
+                'L': true,
+                'M': true,
+                'N': true,
+                'O': true,
+                'P': true,
+                'Q': true,
+                'R': true,
+                'S': true,
+                'T': true,
+                'U': true,
+                'V': true,
+                'W': true,
+                'X': true,
+                'Y': true,
+                'Z': true
+              };
 
   for (let i = 0; i < str.length; i++){
-    if (caps.includes(str[i])) return true;
+    if (caps[str[i]]) return true;
   }
 
   return false;

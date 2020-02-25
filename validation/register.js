@@ -17,6 +17,10 @@ module.exports = function validateRegisterInput(data) {
   if (!Validator.isLength(data.username, { min: 2, max: 30 })) {
     errors.username = "Username must be between 2 and 30 characters";
   }
+
+  if (!Validator.isAlphanumeric(data.username)) {
+    errors.username = "Username must contain only letters and numbers"
+  }
   
   if (Validator.isEmpty(data.username)) {
     errors.username = "Username field is required";
@@ -43,15 +47,15 @@ module.exports = function validateRegisterInput(data) {
   }
   
     if (!hasSpecialChar(data.password)) {
-      errors.password_special = "Password must contain at least 1 of the following special characters: @, %, +, !, #, $, ^, ?, :, (, ), [, ], ~, -, _, . (period), , (comma).";
+      errors.passwordSpecial = "Password must contain at least 1 of the following special characters: @, %, +, !, #, $, ^, ?, :, (, ), [, ], ~, -, _, . (period), , (comma).";
     }
   
     if (!hasNumber(data.password)) {
-      errors.password_number = "Password must contain at least 1 number.";
+      errors.passwordNumber = "Password must contain at least 1 number.";
     }
   
     if (!hasCapital(data.password)) {
-      errors.password_capital = "Password must contain at least 1 capital letter.";
+      errors.passwordCapital = "Password must contain at least 1 capital letter.";
     }
 
   if (!Validator.equals(data.password, data.password2)) {
