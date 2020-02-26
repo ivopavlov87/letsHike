@@ -11,14 +11,14 @@ router.get("/", (req, res) => {
   Hike.find()
     .sort({ date: -1 })
     .then(hikes => res.json(hikes))
-    .catch(err => res.status(404).json({ nohikesfound: "No hikes found" }));
+    .catch(err => res.status(404).json({ noHikesFound: "No hikes found" }));
 });
 
 router.get("/:id", (req, res) => {
   Hike.findById(req.params.id)
     .then(hike => res.json(hike))
     .catch(err =>
-      res.status(404).json({ nohikefound: "No tweet found with that ID" })
+      res.status(404).json({ noHikeFound: "No hike found with that ID" })
     );
 });
 
