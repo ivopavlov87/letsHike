@@ -13,6 +13,7 @@ module.exports = function validateRegisterInput(data) {
   data.email = validText(data.email) ? data.email : "";
   data.password = validText(data.password) ? data.password : "";
   data.password2 = validText(data.password2) ? data.password2 : "";
+  data.adminCode = validText(data.adminCode) ? data.adminCode : "";
   
   if (!Validator.isLength(data.username, { min: 4, max: 30 })) {
     errors.username = "Username must be between 4 and 30 characters";
