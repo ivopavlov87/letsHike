@@ -16,12 +16,13 @@ const HikeSchema = new Schema({
     type: String,
     required: true
   },
+  // DELETE
   // zipcode: {
   //   type: Number,
   //   required: true
   // },
   distance: {
-    type: mongoose.Decimal128,
+    type: Number,
     required: true
   },
   elevationGain: {

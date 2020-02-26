@@ -7,6 +7,21 @@ const passport = require("passport");
 const Hike = require("../../models/Hike");
 const validateHikeInput = require("../../validation/hike");
 
+router.get("/", (req, res) => {
+  Hike.find()
+    .sort({ date: -1 })
+    .then(hikes => res.json(hikes))
+    .catch(err => res.status(404).json({ nohikesfound: "No hikes found" }));
+});
+
+router.get("/:id", (req, res) => {
+  Hike.findById(req.params.id)
+    .then(hike => res.json(hike))
+    .catch(err =>
+      res.status(404).json({ nohikefound: "No tweet found with that ID" })
+    );
+});
+
 router.post(
   '/new',
   passport.authenticate("jwt", { session: false }),
@@ -30,7 +45,7 @@ router.post(
         trailheadName: req.body.trailheadName,
         state: req.body.state,
         // zipcode: req.body.zipcode, DELETE
-        distance: req.body.distance,
+        distance: parseFloat(req.body.distance).toFixed(2),
         elevationGain: req.body.elevationGain,
         description: req.body.description
       });
