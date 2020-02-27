@@ -6,33 +6,48 @@ class HikeCompose extends React.Component {
     super(props);
 
     this.state = {
+      user: this.props.currentUser,
+      trailheadName: "",
+      state: "",
+      distance: "",
+      elevationGain: "",
+      description: "",
+      newHike: "",
+      errors: {}
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearedErrors = false; // test if req'd
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let newHike = {
+      trailheadName: this.state.trailheadName,
+      state: this.state.state,
+      distance: this.state.distance,
+      elevationGain: this.state.elevationGain,
+      description: this.state.description
+    };
+
+    this.props.createHike(newHike).then(arg => {
+      if (Object.keys(this.props.errors).length !== 0) {
+        this.setState({ errors: this.props.errors });
+      } else {
+        this.props.clearErrors();
+        this.setState({ newHike: newHike, errors: "" });
+        // this.setState({ errors: "" });
+      }
+    });
+
+    this.setState({
       trailheadName: "",
       state: "",
       distance: "",
       elevationGain: "",
       description: "",
       newHike: ""
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ newHike: nextProps.newHike });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    let hike = {
-      trailheadName: this.state.trailheadName,
-      state: this.state.state,
-      distance: this.state.distance,
-      elevationGain: this.state.elevationGain,
-      description: this.state.description,
-    };
-
-    this.props.createHike(hike);
-    this.setState({ newHike: "" });
+    });
   }
 
   update(field) {
@@ -40,6 +55,16 @@ class HikeCompose extends React.Component {
       this.setState({
         [field]: e.target.value
       });
+  }
+
+  renderErrors() {
+    return (
+      <ul>
+        {Object.keys(this.state.errors).map((error, i) => (
+          <li key={`error-${i}`}>{this.state.errors[error]}</li>
+        ))}
+      </ul>
+    );
   }
 
   render() {
@@ -54,6 +79,8 @@ class HikeCompose extends React.Component {
               onChange={this.update("trailheadName")}
               placeholder="Name of the trailhead"
             />
+            <br />
+            {`${this.state.trailheadName.length}`}/140 characters
             <br />
             <select value={this.state.state} onChange={this.update("state")}>
               <option defaultValue>State</option>
@@ -134,7 +161,10 @@ class HikeCompose extends React.Component {
               placeholder="Describe your hike"
             />
             <br />
+            {`${this.state.description.length}`}/1,000 characters
+            <br />
             <input type="submit" value="Submit" />
+            {this.renderErrors()}
           </div>
         </form>
         <br />

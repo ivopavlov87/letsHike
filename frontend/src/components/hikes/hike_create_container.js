@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { createHike } from "../../actions/hike_actions";
+import { createHike, clearErrors } from "../../actions/hike_actions";
 import HikeCreate from "./hike_create";
 
 const mapStateToProps = state => {
@@ -12,7 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createHike: data => dispatch(createHike(data))
+    createHike: data => dispatch(createHike(data)),
+    clearErrors: () => dispatch(clearErrors())
   };
 };
 

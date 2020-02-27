@@ -3,6 +3,8 @@ import { getHikes, getUserHikes, writeHike } from "../util/hike_api_util";
 export const RECEIVE_HIKES = "RECEIVE_HIKES";
 export const RECEIVE_USER_HIKES = "RECEIVE_USER_HIKES";
 export const RECEIVE_NEW_HIKE = "RECEIVE_NEW_HIKE";
+export const RECEIVE_HIKE_ERRORS = "RECEIVE_HIKE_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 export const receiveHikes = hikes => ({
   type: RECEIVE_HIKES,
@@ -19,6 +21,15 @@ export const receiveNewHike = hike => ({
   hike
 });
 
+export const receiveErrors = errors => ({
+  type: RECEIVE_HIKE_ERRORS,
+  errors
+});
+
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS
+});
+
 export const fetchHikes = () => dispatch =>
   getHikes()
     .then(hikes => dispatch(receiveHikes(hikes)))
@@ -32,4 +43,4 @@ export const fetchUserHikes = id => dispatch =>
 export const createHike = data => dispatch =>
   writeHike(data)
     .then(hike => dispatch(receiveNewHike(hike)))
-    .catch(err => console.log(err));
+    .catch(err => dispatch(receiveErrors(err.response.data)))
