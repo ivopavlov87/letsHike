@@ -11,3 +11,7 @@ export const getUserHikes = id => {
 export const writeHike = data => {
   return axios.post("/api/hikes/new", data);
 };
+
+export const deleteHike = id => {
+  return axios.delete(`/api/hikes/${id}`);
+};

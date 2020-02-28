@@ -1,9 +1,11 @@
-import { getHikes, getUserHikes, writeHike } from "../util/hike_api_util";
+// import { getHikes, getUserHikes, writeHike, deleteHike } from "../util/hike_api_util";
+import * as HikeAPIUtil from "../util/hike_api_util";
 
 export const RECEIVE_HIKES = "RECEIVE_HIKES";
 export const RECEIVE_USER_HIKES = "RECEIVE_USER_HIKES";
 export const RECEIVE_NEW_HIKE = "RECEIVE_NEW_HIKE";
 export const RECEIVE_HIKE_ERRORS = "RECEIVE_HIKE_ERRORS";
+export const REMOVE_HIKE = "REMOVE_HIKE";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 export const receiveHikes = hikes => ({
@@ -26,21 +28,31 @@ export const receiveErrors = errors => ({
   errors
 });
 
+export const removeHike = hikeId => ({
+  type: REMOVE_HIKE,
+  hikeId
+});
+
 export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
 
 export const fetchHikes = () => dispatch =>
-  getHikes()
+  HikeAPIUtil.getHikes()
     .then(hikes => dispatch(receiveHikes(hikes)))
     .catch(err => console.log(err));
 
 export const fetchUserHikes = id => dispatch =>
-  getUserHikes(id)
+  HikeAPIUtil.getUserHikes(id)
     .then(hikes => dispatch(receiveUserHikes(hikes)))
     .catch(err => console.log(err));
 
 export const createHike = data => dispatch =>
-  writeHike(data)
+  HikeAPIUtil.writeHike(data)
     .then(hike => dispatch(receiveNewHike(hike)))
-    .catch(err => dispatch(receiveErrors(err.response.data)))
+    .catch(err => dispatch(receiveErrors(err.response.data)));
+
+export const deleteHike = id => dispatch =>
+  HikeAPIUtil.deleteHike(id)
+    .then(res => dispatch(removeHike(id)))
+    .catch(err => dispatch(receiveErrors(err)));

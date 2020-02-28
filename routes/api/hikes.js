@@ -42,6 +42,7 @@ router.post(
       
 
       const newHike = new Hike({
+        user: req.body.user,
         trailheadName: req.body.trailheadName,
         state: req.body.state,
         // zipcode: req.body.zipcode, DELETE
@@ -52,6 +53,32 @@ router.post(
 
       newHike.save().then(hike => res.json(hike));
     });
+  }
+);
+
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Hike.findByIdAndRemove(req.params.id, (err, hike) => {
+      if (!hike) {
+        return res
+          .status(404)
+          .json({ noHikeFound: "No hike found with that ID" });
+      } else {
+        const response = {
+          message: "Hike successfully deleted",
+          id: req.params.id
+        };
+        return res.status(200).json(response);
+      }
+    });
+
+    // const response = {
+    //   message: "Hike successfully deleted",
+    //   id: req.params.id
+    // };
+    // return res.status(200).json(response);
   }
 );
 

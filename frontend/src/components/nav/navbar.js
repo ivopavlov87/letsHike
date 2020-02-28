@@ -21,7 +21,7 @@ class NavBar extends React.Component {
         <div>
           <Link to={"/hikes"}>All Hikes</Link>
           <Link to={"/profile"}>Profile</Link>
-          {/* <Link to={"/new_tweet"}>Write a Tweet</Link> */}
+          <Link to={"/hikes/new"}>New Hike</Link>
           <button onClick={this.logoutUser}>Logout</button>
         </div>
       );
@@ -30,6 +30,7 @@ class NavBar extends React.Component {
         <div>
           <Link to={"/signup"}>Signup</Link>
           <Link to={"/login"}>Login</Link>
+          
         </div>
       );
     }

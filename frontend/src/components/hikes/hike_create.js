@@ -17,12 +17,13 @@ class HikeCompose extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearedErrors = false; // test if req'd
+    // this.clearedErrors = false; // test if req'd
   }
 
   handleSubmit(e) {
     e.preventDefault();
     let newHike = {
+      user: this.props.currentUser.id,
       trailheadName: this.state.trailheadName,
       state: this.state.state,
       distance: this.state.distance,
@@ -68,11 +69,17 @@ class HikeCompose extends React.Component {
   }
 
   render() {
+    console.log(this.state.user);
     return (
       <div>
         Create a hike!
         <form onSubmit={this.handleSubmit}>
           <div>
+            <input
+              type="hidden"
+              value={this.state.user}
+            />
+            <br />
             <input
               type="text"
               value={this.state.trailheadName}
