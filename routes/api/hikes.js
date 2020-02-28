@@ -3,6 +3,7 @@ const router = express.Router();
 const keys = require("../../config/keys");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const { formatHikes } = require('../../util/responseHelpers')
 
 const Hike = require("../../models/Hike");
 const validateHikeInput = require("../../validation/hike");
@@ -10,7 +11,7 @@ const validateHikeInput = require("../../validation/hike");
 router.get("/", (req, res) => {
   Hike.find()
     .sort({ date: -1 })
-    .then(hikes => res.json(hikes))
+    .then(hikes => res.json(formatHikes(hikes)))
     .catch(err => res.status(404).json({ noHikesFound: "No hikes found" }));
 });
 

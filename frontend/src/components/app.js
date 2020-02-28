@@ -13,7 +13,6 @@ import HikeCreateContainer from "./hikes/hike_create_container";
 const App = () => (
   <div>
     <NavBarContainer />
-    {/* <HikeCreateContainer /> */}
     <Switch>
       <AuthRoute exact path="/" component={MainPage} />
       <AuthRoute exact path="/login" component={LoginFormContainer} />

@@ -3,19 +3,16 @@ import { Link } from "react-router-dom";
 
 
 class HikeBox extends React.Component {
-  // constructor(props){
-  //   super(props)
-  // }
 
   render() {
-
     let deleteButton = "";
     if (this.props.currentUser && this.props.hike.user === this.props.currentUser.id){
-      deleteButton = <Link to={`/hikes`} onClick={() => this.props.deleteHike(this.props.hike._id)}>Delete Hike</Link>
+      deleteButton = <Link to={`#`} onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</Link>
+      // deleteButton = <button onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</button>
     }
 
     if (this.props.hike){
-      // {console.log("props", this.props)}
+      {console.log("props", this.props)}
       return (
         <div>
           <h3>{this.props.hike.trailheadName}</h3>

@@ -6,34 +6,16 @@ class Hikes extends React.Component {
   constructor(props) {
     super(props);
 
-  this.state = {
-    hikes: []
-  };
-}
-
-  // componentWillMount() {
-  //   this.props.fetchHikes();
-  // }
+    this.state = {
+      hikes: []
+    };
+  }
 
   componentDidMount() {
     this.props.fetchHikes();
   }
 
-  shouldComponentUpdate(prevProps, prevState){
-    // this.props.fetchHikes();
-    return prevProps.hikes !== this.props.hikes;
-    if(prevProps.hikes !== this.props.hikes){
-      console.log("hikes have changed")
-      // this.setState({ hikes: this.props.fetchHikes() })
-    }
-  }
-
-  // componentWillReceiveProps(newState) {
-  //   this.setState({ hikes: newState.hikes });
-  // }
-
   render() {
-    // console.log("state", this.state)
     if (this.props.hikes.length === 0) {
       return <div>Loading hikes...</div>;
     } else {

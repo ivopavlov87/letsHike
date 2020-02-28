@@ -175,7 +175,7 @@ class HikeCompose extends React.Component {
           </div>
         </form>
         <br />
-        <HikeBox hike={this.state.newHike} />
+        <HikeBox hike={this.state.newHike} deleteHike={this.props.deleteHike} currentUser={this.props.currentUser}/>
       </div>
     );
   }
