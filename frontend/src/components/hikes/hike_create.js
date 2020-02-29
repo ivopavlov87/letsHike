@@ -17,7 +17,16 @@ class HikeCompose extends React.Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.clearedErrors = false; // test if req'd
+    this.deleteNewHike = this.deleteNewHike.bind(this);
+  }
+
+  deleteNewHike(id) {
+    this.props.deleteHike(id)
+    this.setState({ newHike: "" })
+  }
+
+  componentWillUnmount(){
+    this.props.clearErrors();
   }
 
   handleSubmit(e) {
@@ -32,11 +41,12 @@ class HikeCompose extends React.Component {
     };
 
     this.props.createHike(newHike).then(arg => {
+      console.log(arg);
       if (Object.keys(this.props.errors).length !== 0) {
         this.setState({ errors: this.props.errors });
       } else {
         this.props.clearErrors();
-        this.setState({ newHike: newHike, errors: "" });
+        this.setState({ newHike: arg.hike.data, errors: "" });
         // this.setState({ errors: "" });
       }
     });
@@ -69,16 +79,13 @@ class HikeCompose extends React.Component {
   }
 
   render() {
-    console.log(this.state.user);
+    // console.log(this.state.user);
     return (
       <div>
         Create a hike!
         <form onSubmit={this.handleSubmit}>
           <div>
-            <input
-              type="hidden"
-              value={this.state.user}
-            />
+            <input type="hidden" value={this.state.user} />
             <br />
             <input
               type="text"
@@ -175,7 +182,11 @@ class HikeCompose extends React.Component {
           </div>
         </form>
         <br />
-        <HikeBox hike={this.state.newHike} deleteHike={this.props.deleteHike} currentUser={this.props.currentUser}/>
+        <HikeBox
+          hike={this.state.newHike}
+          deleteHike={this.deleteNewHike}
+          currentUser={this.props.currentUser}
+        />
       </div>
     );
   }

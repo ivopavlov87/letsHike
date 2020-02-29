@@ -3,7 +3,7 @@ const router = express.Router();
 const keys = require("../../config/keys");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const { formatHikes } = require('../../util/responseHelpers')
+const { formatHikes, formatHike } = require('../../util/responseHelpers')
 
 const Hike = require("../../models/Hike");
 const validateHikeInput = require("../../validation/hike");
@@ -46,13 +46,12 @@ router.post(
         user: req.body.user,
         trailheadName: req.body.trailheadName,
         state: req.body.state,
-        // zipcode: req.body.zipcode, DELETE
         distance: parseFloat(req.body.distance).toFixed(2),
         elevationGain: req.body.elevationGain,
         description: req.body.description
       });
 
-      newHike.save().then(hike => res.json(hike));
+      newHike.save().then(hike => res.json(formatHike(hike)));
     });
   }
 );

@@ -7,12 +7,12 @@ class HikeBox extends React.Component {
   render() {
     let deleteButton = "";
     if (this.props.currentUser && this.props.hike.user === this.props.currentUser.id){
-      deleteButton = <Link to={`#`} onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</Link>
+      deleteButton = <Link to={`#`} onClick={() => this.props.deleteHike(this.props.hike.id ? this.props.hike.id : this.props.hike._id)}>Delete Hike</Link>
       // deleteButton = <button onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</button>
     }
 
     if (this.props.hike){
-      {console.log("props", this.props)}
+      // {console.log("props", this.props)}
       return (
         <div>
           <h3>{this.props.hike.trailheadName}</h3>

@@ -1,19 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-// We will create this component shortly
 import Root from "./components/root";
-
-// We set this up in the last section
 import configureStore from "./store/store";
 
 // We will use this to parse the user's session token
 import jwt_decode from "jwt-decode";
 
-// The session utility we just created
 import { setAuthToken } from "./util/session_api_util";
-
-// We have not created this action yet, but will do so in the next step
 import { logout } from "./actions/session_actions";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     store = configureStore(preloadedState);
-
     const currentTime = Date.now() / 1000;
 
     // If the user's token has expired
@@ -51,16 +43,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ReactDOM.render(<Root store={store} />, root);
 });
-
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import * as serviceWorker from './serviceWorker';
-
-// ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();

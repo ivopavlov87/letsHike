@@ -16,11 +16,6 @@ const HikeSchema = new Schema({
     type: String,
     required: true
   },
-  // DELETE
-  // zipcode: {
-  //   type: Number,
-  //   required: true
-  // },
   distance: {
     type: Number,
     required: true

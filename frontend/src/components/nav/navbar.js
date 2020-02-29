@@ -19,8 +19,8 @@ class NavBar extends React.Component {
     if (this.props.loggedIn) {
       return (
         <div>
-          <Link to={"/hikes"}>All Hikes</Link>
-          <Link to={"/profile"}>Profile</Link>
+          <Link to={"/hikes"}>All Hikes</Link>&nbsp;
+          <Link to={"/profile"}>Profile</Link>&nbsp;
           <Link to={"/hikes/new"}>New Hike</Link>
           <button onClick={this.logoutUser}>Logout</button>
         </div>
@@ -28,9 +28,8 @@ class NavBar extends React.Component {
     } else {
       return (
         <div>
-          <Link to={"/signup"}>Signup</Link>
+          <Link to={"/signup"}>Signup</Link>&nbsp;
           <Link to={"/login"}>Login</Link>
-          
         </div>
       );
     }

@@ -24,7 +24,7 @@ class Hikes extends React.Component {
           <h2>All Hikes</h2>
           {this.props.hikes.map(hike => (
             <HikeBox
-              key={hike._id}
+              key={hike.id}
               hike={hike}
               deleteHike={this.props.deleteHike}
               currentUser={this.props.currentUser}
