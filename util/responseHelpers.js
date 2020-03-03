@@ -29,4 +29,14 @@ const formatHike = hike => {
   return hikeData;
 };
 
-module.exports = { formatHikes, formatHike }
+const formatUser = user => {
+  const userData = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    adminType: user.adminType
+  };
+  return userData;
+};
+
+module.exports = { formatHikes, formatHike, formatUser }

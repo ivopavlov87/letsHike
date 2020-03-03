@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
 const User = require("../../models/User");
+const { formatUser } = require("../../util/responseHelpers");
 
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -24,7 +25,7 @@ router.get(
 
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
-    .then(user => res.json(user))
+    .then(user => res.json(formatUser(user)))
     .catch(err =>
       res.status(404).json({ noUserFound: "No user found with that ID" })
     );

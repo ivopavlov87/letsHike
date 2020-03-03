@@ -1,4 +1,3 @@
-// import { getHikes, getUserHikes, writeHike, deleteHike } from "../util/hike_api_util";
 import * as HikeAPIUtil from "../util/hike_api_util";
 
 export const RECEIVE_HIKES = "RECEIVE_HIKES";

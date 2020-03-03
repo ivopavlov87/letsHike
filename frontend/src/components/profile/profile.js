@@ -21,7 +21,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log("profile props", this.props);
+    console.log("state props", this.props.test);
     if (this.props.hikes.length === 0) {
       return <div>This user has not made any Hikes</div>;
     } else {

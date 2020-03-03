@@ -7,25 +7,37 @@ class HikeBox extends React.Component {
     super(props);
 
     this.state = {
-      user: this.props.currentUser.username,
+      user: this.props.hike.user || this.props.currentUser.username
     };
   }
 
   componentDidMount() {
     if (this.props.hike.user) {
       this.props.fetchUser(this.props.hike.user).then(res => {
+        console.log("post compDidMount props", this.props)
         return this.setState({ user: res.user.data.username });
       });
     }
   }
 
+  // COMMENTED OUT IN STABLE COMMIT
   // componentDidUpdate(previousProps) {
   //   if (previousProps.match.params.id !== this.props.match.params.id) {
   //     this.props.fetchUserHikes(this.props.userId);
   //   }
   // }
 
+  // componentWillUnmount(){
+  //   this.setState({ user: "" });
+  // }
+
   render() {
+
+    // let hikeCreator;
+    // this.props.fetchUser(this.props.hike.user).then(res => {
+    //   hikeCreator = res.user.data.username;
+    // });
+
     let deleteButton = "";
     if (
       this.props.currentUser &&
@@ -51,9 +63,9 @@ class HikeBox extends React.Component {
         <div>
           <h3>{this.props.hike.trailheadName}</h3>
           <h3>
-            Hike submitted by:{" "}
+            Hike submitted by:
             <Link to={`/users/${this.props.hike.user}`}>{this.state.user}</Link>
-            {/* <Link to={`/users/${this.props.hike.user}`}>{this.props.user.username}</Link> */}
+            {/* <Link to={`/users/${this.props.hike.user}`}>{hikeCreator}</Link> */}
           </h3>
           <h3>{this.props.hike.state}</h3>
           <h3>Round trip: {this.props.hike.distance.toLocaleString()} miles</h3>
