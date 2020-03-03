@@ -3,11 +3,13 @@ import { fetchUserHikes, deleteHike } from "../../actions/hike_actions";
 import { fetchUser } from "../../actions/user_actions";
 import Profile from "./profile";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     hikes: Object.values(state.hikes.user),
     currentUser: state.session.user,
-    user: state.user
+    user: state.users[ownProps.match.params.id],
+    userId: ownProps.match.params.id,
+    test: ownProps
   };
 };
 

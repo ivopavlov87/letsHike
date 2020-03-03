@@ -3,13 +3,13 @@ import { withRouter } from "react-router-dom";
 import HikeBox from "./hike_box";
 
 class Hikes extends React.Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      hikes: []
-    };
-  }
+  //   this.state = {
+  //     hikes: []
+  //   };
+  // }
 
   componentDidMount() {
     this.props.fetchHikes();

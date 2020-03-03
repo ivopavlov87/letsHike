@@ -3,20 +3,27 @@ import { Link } from "react-router-dom";
 
 
 class HikeBox extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      user: "",
+      user: this.props.currentUser.username,
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.hike.user) {
+      this.props.fetchUser(this.props.hike.user).then(res => {
+        return this.setState({ user: res.user.data.username });
+      });
     }
   }
-  
-  componentDidMount() {
-    this.props.fetchUser(this.props.hike.user).then(res => {
-      return (this.setState({ user: res.user.data.username }))
-      console.log(res)
-    });
-  }
+
+  // componentDidUpdate(previousProps) {
+  //   if (previousProps.match.params.id !== this.props.match.params.id) {
+  //     this.props.fetchUserHikes(this.props.userId);
+  //   }
+  // }
 
   render() {
     let deleteButton = "";
@@ -37,17 +44,17 @@ class HikeBox extends React.Component {
           Delete Hike
         </Link>
       );
-      // deleteButton = <button onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</button>
     }
 
     if (this.props.hike) {
-      {
-        console.log("hike box props", this.props);
-      }
       return (
         <div>
           <h3>{this.props.hike.trailheadName}</h3>
-          <h3>Hike submitted by: {this.state.user}</h3>
+          <h3>
+            Hike submitted by:{" "}
+            <Link to={`/users/${this.props.hike.user}`}>{this.state.user}</Link>
+            {/* <Link to={`/users/${this.props.hike.user}`}>{this.props.user.username}</Link> */}
+          </h3>
           <h3>{this.props.hike.state}</h3>
           <h3>Round trip: {this.props.hike.distance.toLocaleString()} miles</h3>
           <h3>

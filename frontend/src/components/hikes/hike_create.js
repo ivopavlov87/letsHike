@@ -186,6 +186,7 @@ class HikeCompose extends React.Component {
           hike={this.state.newHike}
           deleteHike={this.deleteNewHike}
           currentUser={this.props.currentUser}
+          fetchUser={this.props.fetchUser}
         />
       </div>
     );

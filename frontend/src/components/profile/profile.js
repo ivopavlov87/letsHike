@@ -10,11 +10,18 @@ class Profile extends React.Component {
     };
   }
 
-  componentDidMount(){
-    this.props.fetchUserHikes(this.props.currentUser.id);
+  componentDidMount() {
+    this.props.fetchUserHikes(this.props.userId);
+  }
+
+  componentDidUpdate(previousProps) {
+    if (previousProps.match.params.id !== this.props.match.params.id) {
+      this.props.fetchUserHikes(this.props.userId);
+    }
   }
 
   render() {
+    console.log("profile props", this.props);
     if (this.props.hikes.length === 0) {
       return <div>This user has not made any Hikes</div>;
     } else {
