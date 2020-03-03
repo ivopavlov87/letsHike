@@ -95,13 +95,13 @@ router.post("/login", (req, res) => {
   }).then(user => {
     if (!user) {
       // Use the validations to send the error
-      errors.user = "User not found";
+      errors.user = "Incorrect username/password";
       return res.status(404).json(errors);
     }
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        const payload = { id: user.id, username: user.username };
+        const payload = { id: user.id, username: user.username, adminType: user.adminType };
 
         jwt.sign(
           payload,

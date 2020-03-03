@@ -8,6 +8,7 @@ const { formatHikes, formatHike } = require('../../util/responseHelpers')
 const Hike = require("../../models/Hike");
 const validateHikeInput = require("../../validation/hike");
 
+// This is for all hikes
 router.get("/", (req, res) => {
   Hike.find()
     .sort({ date: -1 })
@@ -15,6 +16,7 @@ router.get("/", (req, res) => {
     .catch(err => res.status(404).json({ noHikesFound: "No hikes found" }));
 });
 
+// This is for one specific hike
 router.get("/:id", (req, res) => {
   Hike.findById(req.params.id)
     .then(hike => res.json(hike))
@@ -23,6 +25,17 @@ router.get("/:id", (req, res) => {
     );
 });
 
+// This is for all hikes from a specific user
+router.get("/user/:user_id", (req, res) => {
+  Hike.find({ user: req.params.user_id })
+    .sort({ date: -1 })
+    .then(hikes => res.json(formatHikes(hikes)))
+    .catch(err =>
+      res.status(404).json({ noHikesFound: "No hikess found from that user" })
+    );
+});
+
+// This is to make a new hike
 router.post(
   '/new',
   passport.authenticate("jwt", { session: false }),
@@ -56,11 +69,16 @@ router.post(
   }
 );
 
+
+// This is to delete a hike
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Hike.findByIdAndRemove(req.params.id, (err, hike) => {
+      // console.log('req', req);
+      console.log('res user adminType', res.req.user.adminType);
+      console.log('hike', hike);
       if (!hike) {
         return res
           .status(404)

@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { fetchHikes, deleteHike } from "../../actions/hike_actions";
+import { fetchUser } from "../../actions/user_actions";
 import Hikes from "./hikes";
 
 const mapStateToProps = state => {
@@ -17,7 +18,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchHikes: () => dispatch(fetchHikes()),
-    deleteHike: (id) => dispatch(deleteHike(id))
+    deleteHike: id => dispatch(deleteHike(id)),
+    fetchUser: id => dispatch(fetchUser(id))
   };
 };
 

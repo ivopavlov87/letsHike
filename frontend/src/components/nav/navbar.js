@@ -20,7 +20,7 @@ class NavBar extends React.Component {
       return (
         <div>
           <Link to={"/hikes"}>All Hikes</Link>&nbsp;
-          <Link to={"/profile"}>Profile</Link>&nbsp;
+          <Link to={`/users/${this.props.currentUser.username}`}>Profile</Link>&nbsp;
           <Link to={"/hikes/new"}>New Hike</Link>
           <button onClick={this.logoutUser}>Logout</button>
         </div>

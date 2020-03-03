@@ -27,6 +27,7 @@ class Hikes extends React.Component {
               key={hike.id}
               hike={hike}
               deleteHike={this.props.deleteHike}
+              fetchUser={this.props.fetchUser}
               currentUser={this.props.currentUser}
             />
           ))}
