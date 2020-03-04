@@ -2,26 +2,21 @@ import React from "react";
 import HikeBox from "../hikes/hike_box";
 
 class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hikes: []
-    };
-  }
 
   componentDidMount() {
     this.props.fetchUserHikes(this.props.userId);
   }
 
   componentDidUpdate(previousProps) {
+    // ensures re-render when changing which user profile
+    // you are looking at
     if (previousProps.match.params.id !== this.props.match.params.id) {
       this.props.fetchUserHikes(this.props.userId);
     }
   }
 
   render() {
-    console.log("state props", this.props.test);
+
     if (this.props.hikes.length === 0) {
       return <div>This user has not made any Hikes</div>;
     } else {
@@ -33,7 +28,6 @@ class Profile extends React.Component {
               key={hike.id}
               hike={hike}
               deleteHike={this.props.deleteHike}
-              fetchUser={this.props.fetchUser}
               currentUser={this.props.currentUser}
             />
           ))}

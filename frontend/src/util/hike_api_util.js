@@ -1,5 +1,9 @@
 import axios from "axios";
 
+export const getHike = id => {
+  return axios.get(`/api/hikes/${id}`);
+};
+
 export const getHikes = () => {
   return axios.get("/api/hikes");
 };

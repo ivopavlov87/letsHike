@@ -21,6 +21,10 @@ const UserSchema = new Schema({
   adminType: {
     type: Boolean
   },
+  hikes: [{
+    type: Schema.Types.ObjectId,
+    ref: "Hike"
+  }],
   date: {
     type: Date,
     default: Date.now

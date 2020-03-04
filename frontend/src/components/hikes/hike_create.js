@@ -41,13 +41,11 @@ class HikeCompose extends React.Component {
     };
 
     this.props.createHike(newHike).then(arg => {
-      console.log(arg);
       if (Object.keys(this.props.errors).length !== 0) {
         this.setState({ errors: this.props.errors });
       } else {
         this.props.clearErrors();
         this.setState({ newHike: arg.hike.data, errors: "" });
-        // this.setState({ errors: "" });
       }
     });
 
@@ -79,7 +77,6 @@ class HikeCompose extends React.Component {
   }
 
   render() {
-    // console.log(this.state.user);
     return (
       <div>
         Create a hike!
@@ -186,7 +183,6 @@ class HikeCompose extends React.Component {
           hike={this.state.newHike}
           deleteHike={this.deleteNewHike}
           currentUser={this.props.currentUser}
-          fetchUser={this.props.fetchUser}
         />
       </div>
     );

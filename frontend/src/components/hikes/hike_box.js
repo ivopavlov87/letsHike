@@ -3,58 +3,24 @@ import { Link } from "react-router-dom";
 
 
 class HikeBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user: this.props.hike.user || this.props.currentUser.username
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.hike.user) {
-      this.props.fetchUser(this.props.hike.user).then(res => {
-        console.log("post compDidMount props", this.props)
-        return this.setState({ user: res.user.data.username });
-      });
-    }
-  }
-
-  // COMMENTED OUT IN STABLE COMMIT
-  // componentDidUpdate(previousProps) {
-  //   if (previousProps.match.params.id !== this.props.match.params.id) {
-  //     this.props.fetchUserHikes(this.props.userId);
-  //   }
-  // }
-
-  // componentWillUnmount(){
-  //   this.setState({ user: "" });
-  // }
 
   render() {
 
-    // let hikeCreator;
-    // this.props.fetchUser(this.props.hike.user).then(res => {
-    //   hikeCreator = res.user.data.username;
-    // });
-
     let deleteButton = "";
     if (
-      this.props.currentUser &&
-      (this.props.hike.user === this.props.currentUser.id ||
-        this.props.currentUser.adminType)
+      // below conditional is general conditional
+      (this.props.currentUser && this.props.hike.user &&
+      (this.props.hike.user._id === this.props.currentUser.id)) ||
+
+      // below conditional is for when a new hike is created
+      (this.props.currentUser && this.props.hike.user &&
+      (this.props.hike.user === this.props.currentUser.id)) ||
+
+      // admin user power
+      this.props.currentUser.adminType
     ) {
       deleteButton = (
-        <Link
-          to={`#`}
-          onClick={() =>
-            this.props.deleteHike(
-              this.props.hike.id ? this.props.hike.id : this.props.hike._id
-            )
-          }
-        >
-          Delete Hike
-        </Link>
+        <Link to={`#`} onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</Link>
       );
     }
 
@@ -63,9 +29,8 @@ class HikeBox extends React.Component {
         <div>
           <h3>{this.props.hike.trailheadName}</h3>
           <h3>
-            Hike submitted by:
-            <Link to={`/users/${this.props.hike.user}`}>{this.state.user}</Link>
-            {/* <Link to={`/users/${this.props.hike.user}`}>{hikeCreator}</Link> */}
+            Hike submitted by:&nbsp;
+            <Link to={`/users/${this.props.hike.user._id}`}>{this.props.hike.user.username || this.props.currentUser.username }</Link>
           </h3>
           <h3>{this.props.hike.state}</h3>
           <h3>Round trip: {this.props.hike.distance.toLocaleString()} miles</h3>

@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { fetchUserHikes, deleteHike } from "../../actions/hike_actions";
-import { fetchUser } from "../../actions/user_actions";
 import Profile from "./profile";
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,15 +8,13 @@ const mapStateToProps = (state, ownProps) => {
     currentUser: state.session.user,
     user: state.users[ownProps.match.params.id],
     userId: ownProps.match.params.id,
-    test: state
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchUserHikes: id => dispatch(fetchUserHikes(id)),
-    deleteHike: id => dispatch(deleteHike(id)),
-    fetchUser: id => dispatch(fetchUser(id))
+    deleteHike: id => dispatch(deleteHike(id))
   };
 };
 

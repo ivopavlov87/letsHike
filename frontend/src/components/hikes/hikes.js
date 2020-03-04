@@ -3,19 +3,13 @@ import { withRouter } from "react-router-dom";
 import HikeBox from "./hike_box";
 
 class Hikes extends React.Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     hikes: []
-  //   };
-  // }
 
   componentDidMount() {
     this.props.fetchHikes();
   }
 
   render() {
+
     if (this.props.hikes.length === 0) {
       return <div>Loading hikes...</div>;
     } else {
@@ -27,7 +21,6 @@ class Hikes extends React.Component {
               key={hike.id}
               hike={hike}
               deleteHike={this.props.deleteHike}
-              fetchUser={this.props.fetchUser}
               currentUser={this.props.currentUser}
             />
           ))}

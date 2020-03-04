@@ -1,6 +1,7 @@
 import * as HikeAPIUtil from "../util/hike_api_util";
 
 export const RECEIVE_HIKES = "RECEIVE_HIKES";
+export const RECEIVE_HIKE = "RECEIVE_HIKE";
 export const RECEIVE_USER_HIKES = "RECEIVE_USER_HIKES";
 export const RECEIVE_NEW_HIKE = "RECEIVE_NEW_HIKE";
 export const RECEIVE_HIKE_ERRORS = "RECEIVE_HIKE_ERRORS";
@@ -10,6 +11,11 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const receiveHikes = hikes => ({
   type: RECEIVE_HIKES,
   hikes
+});
+
+export const receiveHike = hike => ({
+  type: RECEIVE_HIKE,
+  hike
 });
 
 export const receiveUserHikes = hikes => ({
@@ -35,6 +41,10 @@ export const removeHike = hikeId => ({
 export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
+
+export const fetchHike = id => dispatch => {
+  return HikeAPIUtil.getHike(id).then(hike => dispatch(receiveHike(hike)));
+};
 
 export const fetchHikes = () => dispatch =>
   HikeAPIUtil.getHikes()
