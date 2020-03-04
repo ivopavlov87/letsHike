@@ -25,6 +25,7 @@ router.get(
 
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
+    .populate({ path: "hikes", model: "Hike"})
     .then(user => res.json(formatUser(user)))
     .catch(err =>
       res.status(404).json({ noUserFound: "No user found with that ID" })

@@ -6,7 +6,7 @@ class HikeCompose extends React.Component {
     super(props);
 
     this.state = {
-      user: this.props.currentUser,
+      user: this.props.hike ? this.props.hike.user._id : this.props.currentUser,
       trailheadName: "",
       state: "",
       distance: "",

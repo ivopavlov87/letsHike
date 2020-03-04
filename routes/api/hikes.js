@@ -6,13 +6,14 @@ const passport = require("passport");
 const { formatHikes, formatHike } = require('../../util/responseHelpers')
 
 const Hike = require("../../models/Hike");
+const User = require("../../models/User");
 const validateHikeInput = require("../../validation/hike");
 
 // This is for all hikes
 router.get("/", (req, res) => {
   Hike.find()
     .populate({path: 'user', model: 'User', select: 'id username email'})
-    .sort({ date: -1 })
+    .sort({ trailheadName: 1 })
     .then(hikes => res.json(formatHikes(hikes)))
     .catch(err => res.status(404).json({ noHikesFound: "No hikes found" }));
 });
@@ -34,7 +35,7 @@ router.get("/user/:user_id", (req, res) => {
     .sort({ date: -1 })
     .then(hikes => res.json(formatHikes(hikes)))
     .catch(err =>
-      res.status(404).json({ noHikesFound: "No hikess found from that user" })
+      res.status(404).json({ noHikesFound: "No hikes found from that user" })
     );
 });
 
@@ -48,7 +49,7 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
+    // console.log("req", req);
     Hike.findOne({ trailheadName: req.body.trailheadName })
       .then(hike => {
         if (hike) {
@@ -67,7 +68,13 @@ router.post(
           description: req.body.description
         });
 
-        newHike.save().then(hike => res.json(formatHike(hike)));
+        newHike.save().then(hike => {
+          User.findById(hike.user).then(user =>{
+            user.hikes.push(hike._id);
+            user.save();
+          })
+          return res.json(formatHike(hike))
+        });
       });
   }
 );
@@ -78,19 +85,42 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Hike.findByIdAndRemove(req.params.id, (err, hike) => {
-      if (!hike) {
-        return res
-          .status(404)
-          .json({ noHikeFound: "No hike found with that ID" });
-      } else {
-        const response = {
-          message: "Hike successfully deleted",
-          id: req.params.id
-        };
-        return res.status(200).json(response);
-      }
+
+    Hike.findById(req.params.id).then(hike => {
+      User.findById(hike.user).then(user => {
+        user.hikes.splice(user.hikes.indexOf(hike._id), 1);
+        user.save();
+      });
+
+      Hike.findByIdAndRemove(req.params.id, (err, hike) => {
+        if (!hike) {
+          return res
+            .status(404)
+            .json({ noHikeFound: "No hike found with that ID" });
+        } else {
+          const response = {
+            message: "Hike successfully deleted",
+            id: req.params.id
+          };
+          return res.status(200).json(response);
+        }
+      });
     });
+
+    // BACKUP DELETE ROUTE FUNCTIONALITY
+    // Hike.findByIdAndRemove(req.params.id, (err, hike) => {
+    //   if (!hike) {
+    //     return res
+    //       .status(404)
+    //       .json({ noHikeFound: "No hike found with that ID" });
+    //   } else {
+    //     const response = {
+    //       message: "Hike successfully deleted",
+    //       id: req.params.id
+    //     };
+    //     return res.status(200).json(response);
+    //   }
+    // });
   }
 );
 
