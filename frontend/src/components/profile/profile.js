@@ -5,6 +5,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
     this.props.fetchUserHikes(this.props.userId);
+    this.props.fetchUser(this.props.userId);
   }
 
   componentDidUpdate(previousProps) {
@@ -15,14 +16,20 @@ class Profile extends React.Component {
     }
   }
 
+  topOfProfile(){
+    return this.props.user ? this.props.user.username : ""
+  }
+
   render() {
+
+    console.log("props", this.props)
 
     if (this.props.hikes.length === 0) {
       return <div>This user has not made any Hikes</div>;
     } else {
       return (
         <div>
-          <h2>All of This User's Hikes</h2>
+          <h2>All of {this.topOfProfile()}'s Hikes</h2>
           {this.props.hikes.map(hike => (
             <HikeBox
               key={hike.id}
