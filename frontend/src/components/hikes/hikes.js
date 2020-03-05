@@ -10,6 +10,11 @@ class Hikes extends React.Component {
 
   render() {
 
+    let deleteDestination = "#";
+    if (this.props.match.path === '/hikes/:hikeId/edit') {
+      deleteDestination = '/hikes/new'
+    }
+
     if (this.props.hikes.length === 0) {
       return <div>Loading hikes...</div>;
     } else {
@@ -22,6 +27,7 @@ class Hikes extends React.Component {
               hike={hike}
               deleteHike={this.props.deleteHike}
               currentUser={this.props.currentUser}
+              deleteDestination={deleteDestination}
             />
           ))}
         </div>

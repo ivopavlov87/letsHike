@@ -9,22 +9,27 @@ class HikeBox extends React.Component {
     let deleteButton = "";
     if (
       // below conditional is general conditional
-      (this.props.currentUser && this.props.hike.user &&
+      (this.props.currentUser && this.props.hike &&
       (this.props.hike.user._id === this.props.currentUser.id)) ||
 
       // below conditional is for when a new hike is created
-      (this.props.currentUser && this.props.hike.user &&
+      (this.props.currentUser && this.props.hike &&
       (this.props.hike.user === this.props.currentUser.id)) ||
 
       // admin user power
-      this.props.currentUser.adminType
+      (this.props.currentUser.adminType && this.props.hike)
     ) {
       deleteButton = (
-        <Link to={`#`} onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</Link>
+        <div>
+          <Link to={this.props.deleteDestination} onClick={() => this.props.deleteHike(this.props.hike._id || this.props.hike.id)}>Delete Hike</Link>
+          &nbsp;
+          <Link to={`/hikes/${this.props.hike._id || this.props.hike.id}/edit`}>Update Hike</Link>
+        </div>
       );
     }
 
     if (this.props.hike) {
+      console.log("hikeBox props", this.props)
       return (
         <div>
           <h3>{this.props.hike.trailheadName}</h3>

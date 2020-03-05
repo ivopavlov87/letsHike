@@ -20,6 +20,7 @@ const App = () => (
 
       <ProtectedRoute exact path="/users/:id" component={ProfileContainer} />
       <ProtectedRoute exact path="/hikes/new" component={HikeCreateContainer} />
+      <ProtectedRoute exact path="/hikes/:hikeId/edit" component={HikeCreateContainer} />
       <ProtectedRoute exact path="/hikes" component={HikesContainer} />
     </Switch>
   </div>

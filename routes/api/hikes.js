@@ -13,7 +13,7 @@ const validateHikeInput = require("../../validation/hike");
 router.get("/", (req, res) => {
   Hike.find()
     .populate({path: 'user', model: 'User', select: 'id username email'})
-    .sort({ trailheadName: 1 })
+    .sort({ date: -1 })
     .then(hikes => res.json(formatHikes(hikes)))
     .catch(err => res.status(404).json({ noHikesFound: "No hikes found" }));
 });
