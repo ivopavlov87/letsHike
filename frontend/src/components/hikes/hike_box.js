@@ -29,7 +29,6 @@ class HikeBox extends React.Component {
     }
 
     if (this.props.hike) {
-      console.log("hikeBox props", this.props)
       return (
         <div>
           <h3>{this.props.hike.trailheadName}</h3>

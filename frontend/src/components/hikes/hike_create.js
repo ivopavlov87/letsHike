@@ -6,7 +6,6 @@ class HikeCompose extends React.Component {
     super(props);
 
     this.state = {
-      id: this.props.newHike.id || "",
       greeting: "Create a new hike!",
       user: this.props.currentUser,
       trailheadName: "",
@@ -25,38 +24,30 @@ class HikeCompose extends React.Component {
 
   componentDidMount() {
 
-    this.props.fetchHikes();
-
+    // sets up page to edit a hike IF there is a hike to
+    // edit, otherwise this is skipped
     if (this.props.match.path === "/hikes/:hikeId/edit") {
-    console.log("this.props", this.props);
-    this.props
+      this.props
       .fetchHike(this.props.match.params.hikeId)
-      .then(res => {
-        // console.log("promise res", hike)
-        this.setState({
-          greeting: "Update a hike!",
-          id: res.hike.data._id,
-          user: res.hike.data.user._id,
-          trailheadName: res.hike.data.trailheadName,
-          state: res.hike.data.state,
-          distance: res.hike.data.distance,
-          elevationGain: res.hike.data.elevationGain,
-          description: res.hike.data.description,
-          editHike: true,
-          newHike: res.hike.data
-        });
-      })
-      .catch(error => console.log("Making a new hike", error));
+        .then(res => {
+          this.setState({
+            greeting: "Update a hike!",
+            id: res.hike.data.id,
+            user: res.hike.data.user._id,
+            trailheadName: res.hike.data.trailheadName,
+            state: res.hike.data.state,
+            distance: res.hike.data.distance,
+            elevationGain: res.hike.data.elevationGain,
+            description: res.hike.data.description,
+            editHike: true,
+            newHike: res.hike.data
+          });
+        })
+        .catch(error => console.log("Making a new hike1", error));
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("prevProps", prevProps);
-    console.log("current Props", this.props);
-    console.log("current state", this.state);
-
-    if (this.props.match.params.hikeId)
-      this.props.fetchHike(this.props.match.params.hikeId);
+  componentDidUpdate(prevProps) {
 
     // resets state to be able to create new hike
     // when you're editing existing hike and click
@@ -84,30 +75,24 @@ class HikeCompose extends React.Component {
       this.props.match.path === "/hikes/:hikeId/edit" &&
       prevProps.match.path === "/hikes/new"
     ) {
-      console.log("this.props from new to update", this.props);
       this.props
         .fetchHike(this.props.match.params.hikeId)
-        .then(res => {
-          console.log("promise update res", res)
-          this.setState({
-            greeting: "Update a hike!",
-            user: res.hike.data.user._id,
-            trailheadName: res.hike.data.trailheadName,
-            state: res.hike.data.state,
-            distance: res.hike.data.distance,
-            elevationGain: res.hike.data.elevationGain,
-            description: res.hike.data.description,
-            editHike: true,
-            newHike: res.hike.data
-          });
-        })
-        .catch(error => console.log("Making a new hike", error));
-      } 
-      
-      // else if (this.props.match.path === "/hikes/new"){
-      //   this.props
-      //   .fetchHike(this.props.match.params.hikeId)
-      // }
+          .then(res => {
+            this.setState({
+              greeting: "Update a hike!",
+              id: res.hike.data.id,
+              user: res.hike.data.user._id,
+              trailheadName: res.hike.data.trailheadName,
+              state: res.hike.data.state,
+              distance: res.hike.data.distance,
+              elevationGain: res.hike.data.elevationGain,
+              description: res.hike.data.description,
+              editHike: true,
+              newHike: res.hike.data
+            });
+          })
+          .catch(error => console.log("Making a new hike2", error));
+    } 
   }
 
   deleteNewHike(id) {
@@ -138,14 +123,17 @@ class HikeCompose extends React.Component {
           this.props.clearErrors();
           this.setState({ newHike: arg.hike.data, errors: "" });
         }
+
+        this.setState({
+          trailheadName: "",
+          state: "",
+          distance: "",
+          elevationGain: "",
+          description: "",
+        });
+
       });
     } else {
-      // console.log("props hike", this.props.hike)
-
-      // let hikeToUpdate;
-      // this.props.fetchHike(this.props.hike).then(res => hikeToUpdate = res.hike.data);
-      this.props.hike.trailHeadName = this.state.trailheadName;
-
       this.props.updateHike(this.state).then(arg => {
         if (Object.keys(this.props.errors).length !== 0) {
           this.setState({ errors: this.props.errors });
@@ -155,14 +143,6 @@ class HikeCompose extends React.Component {
         }
       });
     }
-    this.setState({
-      trailheadName: "",
-      state: "",
-      distance: "",
-      elevationGain: "",
-      description: "",
-      newHike: ""
-    });
   }
 
   update(field) {

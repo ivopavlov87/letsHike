@@ -42,9 +42,11 @@ export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
 
-export const fetchHike = id => dispatch => {
-  return HikeAPIUtil.getHike(id).then(hike => dispatch(receiveHike(hike)));
-};
+export const fetchHike = id => dispatch => 
+  HikeAPIUtil.getHike(id)
+    .then(hike => dispatch(receiveHike(hike)))
+    .catch(err => console.log(err));
+
 
 export const fetchHikes = () => dispatch =>
   HikeAPIUtil.getHikes()

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const keys = require("../../config/keys");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const { formatHikes, formatHike } = require('../../util/responseHelpers')
@@ -22,7 +21,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   Hike.findById(req.params.id)
     .populate({ path: "user", model: "User", select: "id username email" })
-    .then(hike => res.json(hike))
+    .then(hike => res.json(formatHike(hike)))
     .catch(err =>
       res.status(404).json({ noHikeFound: "No hike found with that ID" })
     );
@@ -49,7 +48,8 @@ router.post(
     if (!isValid) {
       return res.status(400).json(errors);
     }
-    // console.log("req", req);
+    // checks to make sure a hike doesn't already exist
+    // with the same trailhead name
     Hike.findOne({ trailheadName: req.body.trailheadName })
       .then(hike => {
         if (hike) {
@@ -59,6 +59,7 @@ router.post(
           return res.status(400).json(errors);
         }
 
+        // creates new hike
         const newHike = new Hike({
           user: req.body.user,
           trailheadName: req.body.trailheadName,
@@ -83,33 +84,32 @@ router.patch(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("patch req", req.body)
+    // Some typecasting is required to run fields
+    // through Validator
     req.body.distance = req.body.distance.toString();
     req.body.elevationGain = req.body.elevationGain.toString();
     Hike.findById(req.params.id)
       .then(hike => {
-        console.log("the hike", hike)
         const { errors, isValid } = validateHikeInput(req.body);
-        
+
         if (!isValid) {
-          console.log("errors", res);
           return res.status(400).json(errors);
         }
 
+        // updates the fields in the hike
         hike.trailheadName = req.body.trailheadName,
         hike.state = req.body.state,
         hike.distance = parseFloat(req.body.distance).toFixed(2),
         hike.elevationGain = req.body.elevationGain,
-        hike.description = req.body.description
+        hike.description = req.body.description;
 
         hike.save().then(hike => res.json(formatHike(hike)));
       })
-      .catch(err =>
-        {
-          console.log('the err', err)
-          return res.status(404).json({ noHikeFound: "No hike found with that ID" })
-        }
-      );
+      .catch(err => {
+        return res
+          .status(404)
+          .json({ noHikeFound: "No hike found with that ID" });
+      });
   }
 );
 
@@ -120,11 +120,14 @@ router.delete(
   (req, res) => {
 
     Hike.findById(req.params.id).then(hike => {
+      // This removes hike from the owner-user object's
+      // "hikes" array, i.e., the hikes they've made
       User.findById(hike.user).then(user => {
         user.hikes.splice(user.hikes.indexOf(hike._id), 1);
         user.save();
       });
 
+      // This removes the hike from the database
       Hike.findByIdAndRemove(req.params.id, (err, hike) => {
         if (!hike) {
           return res

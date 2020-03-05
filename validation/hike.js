@@ -6,7 +6,6 @@ module.exports = function validateHikeInput(data) {
 
   data.trailheadName = validText(data.trailheadName) ? data.trailheadName : "";
   data.state = validText(data.state) ? data.state : "";
-  // data.zipcode = Validator.isInt(data.zipcode) ? data.zipcode : ""; DELETE
   data.distance = Validator.isFloat(data.distance) ? parseFloat(data.distance).toFixed(2) : "";
   data.elevationGain = Validator.isInt(data.elevationGain) ? data.elevationGain : "";
   data.description = validText(data.description) ? data.description : "";
@@ -22,15 +21,6 @@ module.exports = function validateHikeInput(data) {
   if (Validator.isEmpty(data.state)) {
     errors.state = "State field is required";
   }
-
-  // if (Validator.isEmpty(data.zipcode)) {
-  //   errors.zipcode = "Zipcode field is required";
-  // }
-
-  // DELETE
-  // if (Validator.isPostalCode(data.zipcode, "US")) {
-  //   errors.zipcode = "Zipcode field is invalid";
-  // }
 
   if (Validator.isEmpty(data.distance)) {
     errors.distance = "Distance field is required and must be a number, examples: 1, 7.3, 10.25";
