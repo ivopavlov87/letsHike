@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { createHike, deleteHike, fetchHike, clearErrors } from "../../actions/hike_actions";
+import { createHike, deleteHike, fetchHike, fetchHikes, updateHike, clearErrors } from "../../actions/hike_actions";
 import HikeCreate from "./hike_create";
 
 const mapStateToProps = (state, ownProps) => {
@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     currentUser: state.session.user,
     newHike: state.hikes.new,
     errors: state.errors.hikes,
-    hike: ownProps.match.params.hikeId ? state.hikes[ownProps.match.params.hikeId] : false
+    hike: state.hikes.all[ownProps.match.params.hikeId]
   };
 };
 
@@ -16,7 +16,9 @@ const mapDispatchToProps = dispatch => {
     createHike: data => dispatch(createHike(data)),
     deleteHike: id => dispatch(deleteHike(id)),
     clearErrors: () => dispatch(clearErrors()),
-    fetchHike: id => dispatch(fetchHike(id))
+    fetchHike: id => dispatch(fetchHike(id)),
+    updateHike: hike => dispatch(updateHike(hike)),
+    fetchHikes: () => dispatch(fetchHikes())
   };
 };
 

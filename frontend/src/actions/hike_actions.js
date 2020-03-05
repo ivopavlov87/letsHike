@@ -61,6 +61,11 @@ export const createHike = data => dispatch =>
     .then(hike => dispatch(receiveNewHike(hike)))
     .catch(err => dispatch(receiveErrors(err.response.data)));
 
+export const updateHike = hike => dispatch =>
+  HikeAPIUtil.updateHike(hike)
+    .then(hike => dispatch(receiveHike(hike)))
+    .catch(err => dispatch(receiveErrors(err.response.data)));
+
 export const deleteHike = id => dispatch =>
   HikeAPIUtil.deleteHike(id)
     .then(res => dispatch(removeHike(id)))

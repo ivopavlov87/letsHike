@@ -16,6 +16,10 @@ export const writeHike = data => {
   return axios.post("/api/hikes/new", data);
 };
 
+export const updateHike = hike => {
+  return axios.patch(`/api/hikes/${hike.id}`, hike);
+};
+
 export const deleteHike = id => {
   return axios.delete(`/api/hikes/${id}`);
 };

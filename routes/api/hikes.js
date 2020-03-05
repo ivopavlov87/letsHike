@@ -79,6 +79,39 @@ router.post(
   }
 );
 
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("patch req", req.body)
+    req.body.distance = req.body.distance.toString();
+    req.body.elevationGain = req.body.elevationGain.toString();
+    Hike.findById(req.params.id)
+      .then(hike => {
+        console.log("the hike", hike)
+        const { errors, isValid } = validateHikeInput(req.body);
+        
+        if (!isValid) {
+          console.log("errors", res);
+          return res.status(400).json(errors);
+        }
+
+        hike.trailheadName = req.body.trailheadName,
+        hike.state = req.body.state,
+        hike.distance = parseFloat(req.body.distance).toFixed(2),
+        hike.elevationGain = req.body.elevationGain,
+        hike.description = req.body.description
+
+        hike.save().then(hike => res.json(formatHike(hike)));
+      })
+      .catch(err =>
+        {
+          console.log('the err', err)
+          return res.status(404).json({ noHikeFound: "No hike found with that ID" })
+        }
+      );
+  }
+);
 
 // This is to delete a hike
 router.delete(

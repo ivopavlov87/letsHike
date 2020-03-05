@@ -34,6 +34,7 @@ class Profile extends React.Component {
               hike={hike}
               deleteHike={this.props.deleteHike}
               currentUser={this.props.currentUser}
+              deleteDestination={'#'}
             />
           ))}
         </div>
