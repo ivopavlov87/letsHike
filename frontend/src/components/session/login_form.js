@@ -13,6 +13,36 @@ class LoginForm extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderErrors = this.renderErrors.bind(this);
+    this.prettyDemoUser = this.prettyDemoUser.bind(this);
+  }
+
+  async prettyDemoUser(e) {
+    e.preventDefault();
+
+    const demoUser = {
+      username: "DemoUser",
+      password: "pA55word!"
+    };
+
+    const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+    document.getElementById("login-input").focus();
+    for (let i = 1; i <= demoUser.username.length; i++) {
+      this.setState({ loginInput: demoUser.username.substr(0, i) });
+      await sleep(250);
+    }
+
+    await sleep(250);
+
+    document.getElementById("password-input").focus();
+    for (let i = 1; i <= demoUser.password.length; i++) {
+      this.setState({ password: demoUser.password.substr(0, i) });
+      await sleep(250);
+    }
+
+    await sleep(500);
+
+    document.getElementById("session-submit-btn").click();
   }
 
   // Handle field updates (called in the render method)
@@ -33,9 +63,10 @@ class LoginForm extends React.Component {
     };
 
     this.props.login(user).then(arg => {
-      if (Object.keys(this.props.errors).length === 0) {
-        this.props.history.push("/hikes");
-      } else {
+      // if (Object.keys(this.props.errors).length === 0) {
+      // this.props.history.push("/hikes");
+      // } else {
+      if (Object.keys(this.props.errors).length) {
         this.setState({ errors: this.props.errors });
       }
     });
@@ -63,6 +94,7 @@ class LoginForm extends React.Component {
           <div>
             <input
               type="text"
+              id="login-input"
               value={this.state.loginInput}
               onChange={this.update("loginInput")}
               placeholder="Username or Email"
@@ -70,12 +102,15 @@ class LoginForm extends React.Component {
             <br />
             <input
               type="password"
+              id="password-input"
               value={this.state.password}
               onChange={this.update("password")}
               placeholder="Password"
             />
             <br />
-            <input type="submit" value="Submit" />
+            <input id="session-submit-btn" type="submit" value="Submit" />
+            <br />
+            <input type="submit" onClick={this.prettyDemoUser} value="Demo User Log In" />
             {this.renderErrors()}
           </div>
         </form>
