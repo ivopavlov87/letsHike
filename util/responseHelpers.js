@@ -6,6 +6,8 @@ const formatHikes = hikesArr => {
       trailheadName: hike.trailheadName,
       user: hike.user,
       state: hike.state,
+      lat: hike.lat,
+      lng: hike.lng,
       distance: hike.distance,
       elevationGain: hike.elevationGain,
       description: hike.description,
@@ -22,6 +24,8 @@ const formatHike = hike => {
     trailheadName: hike.trailheadName,
     user: hike.user,
     state: hike.state,
+    lat: hike.lat,
+    lng: hike.lng,
     distance: hike.distance,
     elevationGain: hike.elevationGain,
     description: hike.description

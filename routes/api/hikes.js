@@ -64,6 +64,8 @@ router.post(
           user: req.body.user,
           trailheadName: req.body.trailheadName,
           state: req.body.state,
+          lat: parseFloat(req.body.lat).toFixed(4),
+          lng: parseFloat(req.body.lng).toFixed(4),
           distance: parseFloat(req.body.distance).toFixed(2),
           elevationGain: req.body.elevationGain,
           description: req.body.description
@@ -86,6 +88,8 @@ router.patch(
   (req, res) => {
     // Some typecasting is required to run fields
     // through Validator
+    req.body.lat = req.body.lat.toString();
+    req.body.lng = req.body.lng.toString();
     req.body.distance = req.body.distance.toString();
     req.body.elevationGain = req.body.elevationGain.toString();
     Hike.findById(req.params.id)
@@ -99,6 +103,8 @@ router.patch(
         // updates the fields in the hike
         hike.trailheadName = req.body.trailheadName,
         hike.state = req.body.state,
+        hike.lat = parseFloat(req.body.lat).toFixed(4),
+        hike.lng = parseFloat(req.body.lng).toFixed(4),
         hike.distance = parseFloat(req.body.distance).toFixed(2),
         hike.elevationGain = req.body.elevationGain,
         hike.description = req.body.description;

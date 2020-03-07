@@ -9,6 +9,7 @@ import LoginFormContainer from "./session/login_form_container";
 import SignupFormContainer from "./session/signup_form_container";
 import ProfileContainer from "./profile/profile_container";
 import HikeCreateContainer from "./hikes/hike_create_container";
+import HikeShowContainer from "./hikes/hike_show_container";
 
 const App = () => (
   <div>
@@ -21,6 +22,7 @@ const App = () => (
       <ProtectedRoute exact path="/users/:id" component={ProfileContainer} />
       <ProtectedRoute exact path="/hikes/new" component={HikeCreateContainer} />
       <ProtectedRoute exact path="/hikes/:hikeId/edit" component={HikeCreateContainer} />
+      <ProtectedRoute exact path="/hikes/:hikeId" component={HikeShowContainer} />
       <ProtectedRoute exact path="/hikes" component={HikesContainer} />
     </Switch>
   </div>

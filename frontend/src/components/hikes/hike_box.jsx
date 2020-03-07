@@ -31,10 +31,19 @@ class HikeBox extends React.Component {
     if (this.props.hike) {
       return (
         <div>
-          <h3>{this.props.hike.trailheadName}</h3>
+          <h3>
+            <Link to={`/hikes/${this.props.hike.id || this.props.hike._id}`}>
+              {this.props.hike.trailheadName}
+            </Link>
+          </h3>
           <h3>
             Hike submitted by:&nbsp;
-            <Link to={`/users/${this.props.hike.user._id || this.props.currentUser.id}`}>{this.props.hike.user.username || this.props.currentUser.username }</Link>
+            <Link
+              to={`/users/${this.props.hike.user._id ||
+                this.props.currentUser.id}`}
+            >
+              {this.props.hike.user.username || this.props.currentUser.username}
+            </Link>
           </h3>
           <h3>{this.props.hike.state}</h3>
           <h3>Round trip: {this.props.hike.distance.toLocaleString()} miles</h3>

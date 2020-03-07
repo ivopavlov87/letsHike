@@ -1,5 +1,6 @@
 import React from "react";
 import HikeBox from "./hike_box";
+import { withRouter } from "react-router-dom";
 
 class HikeCompose extends React.Component {
   constructor(props) {
@@ -10,6 +11,8 @@ class HikeCompose extends React.Component {
       user: this.props.currentUser,
       trailheadName: "",
       state: "",
+      lat: "",
+      lng: "",
       distance: "",
       elevationGain: "",
       description: "",
@@ -36,6 +39,8 @@ class HikeCompose extends React.Component {
             user: res.hike.data.user._id,
             trailheadName: res.hike.data.trailheadName,
             state: res.hike.data.state,
+            lat: res.hike.data.lat,
+            lng: res.hike.data.lng,
             distance: res.hike.data.distance,
             elevationGain: res.hike.data.elevationGain,
             description: res.hike.data.description,
@@ -61,6 +66,8 @@ class HikeCompose extends React.Component {
         user: this.props.currentUser,
         trailheadName: "",
         state: "",
+        lat: "",
+        lng: "",
         distance: "",
         elevationGain: "",
         description: "",
@@ -84,6 +91,8 @@ class HikeCompose extends React.Component {
               user: res.hike.data.user._id,
               trailheadName: res.hike.data.trailheadName,
               state: res.hike.data.state,
+              lat: res.hike.data.lat,
+              lng: res.hike.data.lng,
               distance: res.hike.data.distance,
               elevationGain: res.hike.data.elevationGain,
               description: res.hike.data.description,
@@ -110,6 +119,8 @@ class HikeCompose extends React.Component {
       user: this.props.hike ? this.props.hike.user : this.props.currentUser.id,
       trailheadName: this.state.trailheadName,
       state: this.state.state,
+      lat: this.state.lat,
+      lng: this.state.lng,
       distance: this.state.distance,
       elevationGain: this.state.elevationGain,
       description: this.state.description
@@ -127,9 +138,11 @@ class HikeCompose extends React.Component {
         this.setState({
           trailheadName: "",
           state: "",
+          lat: "",
+          lng: "",
           distance: "",
           elevationGain: "",
-          description: "",
+          description: ""
         });
 
       });
@@ -244,6 +257,20 @@ class HikeCompose extends React.Component {
             <br />
             <input
               type="number"
+              value={this.state.lat}
+              onChange={this.update("lat")}
+              placeholder="Latitude"
+            />
+            <br />
+            <input
+              type="number"
+              value={this.state.lng}
+              onChange={this.update("lng")}
+              placeholder="Longitude"
+            />
+            <br />
+            <input
+              type="number"
               value={this.state.distance}
               onChange={this.update("distance")}
               placeholder="Length in miles"
@@ -282,4 +309,4 @@ class HikeCompose extends React.Component {
   }
 }
 
-export default HikeCompose;
+export default withRouter(HikeCompose);

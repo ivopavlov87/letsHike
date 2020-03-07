@@ -6,6 +6,8 @@ module.exports = function validateHikeInput(data) {
 
   data.trailheadName = validText(data.trailheadName) ? data.trailheadName : "";
   data.state = validText(data.state) ? data.state : "";
+  data.lat = Validator.isFloat(data.lat) ? parseFloat(data.lat).toFixed(4) : "";
+  data.lng = Validator.isFloat(data.lng) ? parseFloat(data.lng).toFixed(4) : "";
   data.distance = Validator.isFloat(data.distance) ? parseFloat(data.distance).toFixed(2) : "";
   data.elevationGain = Validator.isInt(data.elevationGain) ? data.elevationGain : "";
   data.description = validText(data.description) ? data.description : "";
@@ -20,6 +22,16 @@ module.exports = function validateHikeInput(data) {
 
   if (Validator.isEmpty(data.state)) {
     errors.state = "State field is required";
+  }
+
+  if (Validator.isEmpty(data.lat)) {
+    errors.lat =
+      "Latitude field is required and must be a coordinate, example: 47.7898";
+  }
+
+  if (Validator.isEmpty(data.lng)) {
+    errors.lng =
+      "Longitude field is required and must be a coordinate, example: -121.1009";
   }
 
   if (Validator.isEmpty(data.distance)) {
