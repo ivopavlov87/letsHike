@@ -23,6 +23,7 @@ const HikesReducer = (
       newState.user = action.hikes.data;
       return newState;
     case RECEIVE_NEW_HIKE:
+      newState.all[action.hike.data.id] = action.hike.data;
       newState.new[action.hike.data.id] = action.hike.data;
       return newState;
     case REMOVE_HIKE:

@@ -13,12 +13,12 @@ class HikeShow extends React.Component {
     if (this.props.hike) {
       return (
         <div>
-          <div>
+          <div style={{ height: `500px`, width: `100%` }}>
             Map Goes Here
             <Map
               googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
               loadingElement={<div style={{ height: "100%" }} />}
-              containerElement={<div style={{ height: `400px` }} />}
+              containerElement={<div style={{ height: `100%`, width: `100%` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               hike={this.props.hike}
             />

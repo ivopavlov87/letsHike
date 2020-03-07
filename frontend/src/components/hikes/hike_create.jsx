@@ -1,6 +1,7 @@
 import React from "react";
 import HikeBox from "./hike_box";
 import { withRouter } from "react-router-dom";
+import Map from "../map/map_view";
 
 class HikeCompose extends React.Component {
   constructor(props) {
@@ -53,6 +54,8 @@ class HikeCompose extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+
+    if (this.props.hikeId !== prevProps.hikeId) this.props.fetchHike(this.props.hikeId)
 
     // resets state to be able to create new hike
     // when you're editing existing hike and click
@@ -132,6 +135,7 @@ class HikeCompose extends React.Component {
           this.setState({ errors: this.props.errors });
         } else {
           this.props.clearErrors();
+          this.props.fetchHike(arg.hike.data.id)
           this.setState({ newHike: arg.hike.data, errors: "" });
         }
 
@@ -152,6 +156,7 @@ class HikeCompose extends React.Component {
           this.setState({ errors: this.props.errors });
         } else {
           this.props.clearErrors();
+          this.props.fetchHike(arg.hike.data.id)
           this.setState({ newHike: arg.hike.data, errors: "" });
         }
       });
@@ -180,6 +185,43 @@ class HikeCompose extends React.Component {
     let deleteDestination = "#";
     if (this.props.match.path === '/hikes/:hikeId/edit') {
       deleteDestination = '/hikes/new'
+    }
+
+    let theMap = <div></div>;
+    let theHike = this.props.hike || this.props.newHike
+    if (this.props.hike || this.props.newHike){
+      theMap = (
+        <Map
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+          loadingElement={<div style={{ height: "100%" }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+          hike={theHike}
+        />
+      );
+    }
+
+    let theHikeBox = <div></div>;
+    if (this.props.hike || this.state.newHike){
+      theHikeBox = (
+        <HikeBox
+          hike={this.props.hike ? this.props.hike : this.state.newHike}
+          deleteHike={this.deleteNewHike}
+          currentUser={this.props.currentUser}
+          deleteDestination={deleteDestination}
+        />
+      );
+    }
+
+    let hikePreview = <div></div>;
+    if (this.props.hike ? this.props.hike : this.state.newHike) {
+      hikePreview = (
+        <div>
+          {theMap}
+          <br />
+          {theHikeBox}
+        </div>
+      );
     }
 
     return (
@@ -285,7 +327,7 @@ class HikeCompose extends React.Component {
             <br />
             <input
               type="textarea"
-              maxLength="3000"
+              maxLength="1000"
               value={this.state.description}
               onChange={this.update("description")}
               placeholder="Describe your hike"
@@ -298,12 +340,15 @@ class HikeCompose extends React.Component {
           </div>
         </form>
         <br />
+        {hikePreview}
+        {/* {theMap}
+        <br />
         <HikeBox
           hike={this.state.newHike}
           deleteHike={this.deleteNewHike}
           currentUser={this.props.currentUser}
           deleteDestination={deleteDestination}
-        />
+        /> */}
       </div>
     );
   }
