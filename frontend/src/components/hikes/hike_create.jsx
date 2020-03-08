@@ -28,6 +28,8 @@ class HikeCompose extends React.Component {
 
   componentDidMount() {
 
+    this.props.fetchHikes()
+
     // sets up page to edit a hike IF there is a hike to
     // edit, otherwise this is skipped
     if (this.props.match.path === "/hikes/:hikeId/edit") {
@@ -197,6 +199,7 @@ class HikeCompose extends React.Component {
           containerElement={<div style={{ height: `400px` }} />}
           mapElement={<div style={{ height: `100%` }} />}
           hike={theHike}
+          hikes={this.props.hikes}
         />
       );
     }

@@ -6,6 +6,7 @@ import Map from "../map/map_view"
 class HikeShow extends React.Component {
 
   componentDidMount(){
+    this.props.fetchHikes()
     this.props.fetchHike(this.props.hikeId)
   }
 
@@ -21,6 +22,7 @@ class HikeShow extends React.Component {
               containerElement={<div style={{ height: `100%`, width: `100%` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               hike={this.props.hike}
+              hikes={this.props.hikes}
             />
           </div>
           <HikeBox
