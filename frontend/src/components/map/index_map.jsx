@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
+import { GoogleMap, LoadScript, InfoWindow, Marker } from "@react-google-maps/api";
 import { Link } from 'react-router-dom'
 
-function Map(props) {
+function IndexMap(props) {
 
   const [selectedHike, setSelectedHike] = useState(null);
 
   return (
-    <div>
+    <LoadScript
+      id="script-loader"
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_KEY}
+      loadingElement={<div style={{ height: "100%" }} />}
+      className="map-loading-script"
+    >
       <GoogleMap
-        zoom={props.mapZoom}
-        center={props.mapCenter}
-        mapTypeId={"terrain"}
+        id="index-map"
+        mapTypeId="terrain"
+        mapContainerClassName="map-container"
+        mapContainerStyle={{ height: `100%`, width: `100%` }}
+        zoom={props.zoom}
+        center={props.center}
       >
-        {props.hikes.map(hike => (
+
+      {props.hikes.map(hike => (
           <Marker
             key={`${hike.id}-marker`}
             position={{ lat: hike.lat, lng: hike.lng }}
@@ -62,10 +65,8 @@ function Map(props) {
           </InfoWindow>
         )}
       </GoogleMap>
-    </div>
+    </LoadScript>
   );
 }
 
-const WrappedMap = withScriptjs(withGoogleMap(Map));
-
-export default WrappedMap;
+export default IndexMap;

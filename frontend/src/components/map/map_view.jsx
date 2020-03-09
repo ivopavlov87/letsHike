@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker,
-  InfoWindow
-} from "react-google-maps";
+import { GoogleMap, LoadScript, InfoWindow, Marker } from "@react-google-maps/api";
 import { Link } from "react-router-dom";
 
 function Map(props) {
@@ -13,6 +7,21 @@ function Map(props) {
   const [selectedHike, setSelectedHike] = useState(null);
 
   let center = { lat: props.hike.lat, lng: props.hike.lng }
+
+  let hikeMarker = <div></div>;
+  if (props.hike){
+    hikeMarker = (
+      <Marker
+        position={center}
+        title={props.hike.trailheadName}
+        onClick={() => {
+          if (selectedHike) setSelectedHike(null);
+          setSelectedHike(props.hike);
+        }}
+        icon={"/blue_circle_marker.png"}
+      />
+    );
+  }
 
   let otherHikeMarkers = <div></div>;
   if (props.hikes){
@@ -34,21 +43,22 @@ function Map(props) {
   }
 
   return (
-    <div>
-      <GoogleMap defaultZoom={15} center={center} mapTypeId={"terrain"}>
+    <LoadScript
+      id="script-loader"
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_KEY}
+      loadingElement={<div style={{ height: "100%" }} />}
+      className="map-loading-script"
+    >
+      <GoogleMap
+        id="index-map"
+        mapTypeId="terrain"
+        mapContainerClassName="map-container"
+        mapContainerStyle={{ height: `100%`, width: `100%` }}
+        zoom={15}
+        center={center}
+      >
         {otherHikeMarkers}
-        <Marker
-          position={center}
-          title={props.hike.trailheadName}
-          onClick={() => {
-            if (selectedHike) setSelectedHike(null);
-            setSelectedHike(props.hike);
-          }}
-          icon={{
-            url: "/blue_marker.png",
-            scaledSize: new window.google.maps.Size(60, 60)
-          }}
-        />
+        {hikeMarker}
         {selectedHike && (
           <InfoWindow
             position={{
@@ -57,6 +67,7 @@ function Map(props) {
             }}
             onCloseClick={() => {
               setSelectedHike(null);
+              // props.revertCenter();
             }}
           >
             <div>
@@ -81,10 +92,8 @@ function Map(props) {
           </InfoWindow>
         )}
       </GoogleMap>
-    </div>
+    </LoadScript>
   );
 }
 
-const WrappedMap = withScriptjs(withGoogleMap(Map))
-
-export default WrappedMap;
+export default Map;

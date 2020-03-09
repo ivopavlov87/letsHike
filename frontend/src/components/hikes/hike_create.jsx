@@ -155,18 +155,8 @@ class HikeCompose extends React.Component {
     let deleteDestination = '/hikes/new';
 
     let theMap = <div></div>;
-    let theHike = this.props.hike;
     if (this.props.hike){
-      theMap = (
-        <Map
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
-          loadingElement={<div style={{ height: "100%" }} />}
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-          hike={theHike}
-          hikes={this.props.hikes}
-        />
-      );
+      theMap = <Map hike={this.props.hike} hikes={this.props.hikes} />;
     }
 
     let theHikeBox = <div></div>;
@@ -184,7 +174,7 @@ class HikeCompose extends React.Component {
     let hikePreview = <div></div>;
     if (this.props.hike) {
       hikePreview = (
-        <div>
+        <div style={{ height: `500px`, width: `100%` }}>
           {theMap}
           <br />
           {theHikeBox}

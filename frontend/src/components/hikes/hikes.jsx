@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-// import HikeBox from "./hike_box";
 import IndexMap from "../map/index_map";
 
 class Hikes extends React.Component {
@@ -43,12 +42,10 @@ class Hikes extends React.Component {
         <div>
           <h2>All Hikes</h2>
           <button onClick={this.revertCenter}>Reset Map</button>
-          <div style={{ height: `750px`, width: `100%` }}>
+          <div className="map" style={{ height: `700px`, width: `100%` }}>
             <IndexMap
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`} //&key=${process.env.REACT_APP_GOOGLE_KEY}`}
-              loadingElement={<div style={{ height: "100%" }} />}
-              containerElement={<div style={{ height: `100%`, width: `100%` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
+              zoom={this.state.mapZoom}
+              center={this.state.mapCenter}
               hikes={this.props.hikes}
               mapCenter={this.state.mapCenter}
               mapZoom={this.state.mapZoom}
@@ -56,16 +53,6 @@ class Hikes extends React.Component {
               revertCenter={this.revertCenter}
             />
           </div>
-          {/* <br />
-          {this.props.hikes.map(hike => (
-            <HikeBox
-              key={hike.id}
-              hike={hike}
-              deleteHike={this.props.deleteHike}
-              currentUser={this.props.currentUser}
-              deleteDestination={"#"}
-            />
-          ))} */}
         </div>
       );
     }
