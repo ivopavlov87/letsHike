@@ -8,45 +8,6 @@ import {
 } from "react-google-maps";
 import { Link } from "react-router-dom";
 
-// class Map extends React.Component {
-//   constructor(props){
-//     super(props)
-
-//     this.state = {
-//       center: { lat: this.props.hike.lat, lng: this.props.hike.lng },
-//       lat: this.props.hike.lat,
-//       lng: this.props.hike.lng
-//     };
-//   }
-
-//   componentDidUpdate(prevProps, prevState){
-//     if (prevProps.hike.lat !== this.props.hike.lat || prevProps.hike.lng !== this.props.hike.lng){
-//       this.setState({
-//         center: { lat: this.props.hike.lat, lng: this.props.hike.lng },
-//         lat: this.props.hike.lat,
-//         lng: this.props.hike.lng
-//       });
-//     }
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <GoogleMap
-//           defaultZoom={15}
-//           ref="map"
-//           center={this.state.center}
-//           mapTypeId={"terrain"}
-          
-//         />
-//         <Marker
-//           position={{ lat: this.state.lat, lng: this.state.lng }}
-//         />
-//       </div>
-//     );
-//   }
-// }
-
 function Map(props) {
 
   const [selectedHike, setSelectedHike] = useState(null);
