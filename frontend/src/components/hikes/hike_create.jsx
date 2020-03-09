@@ -151,6 +151,9 @@ class HikeCompose extends React.Component {
           description: ""
         });
 
+        // Go to new hike page after hike creation
+        this.props.history.push(`/hikes/${arg.hike.data.id}`)
+
       });
     } else {
       this.props.updateHike(this.state).then(arg => {

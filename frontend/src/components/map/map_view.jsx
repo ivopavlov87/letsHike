@@ -60,6 +60,7 @@ function Map(props) {
         {props.hikes.filter(hike => hike.id !== props.hike.id).map(hike => (
           <Marker
             key={`${hike.id}-marker`}
+            title={hike.trailheadName}
             position={{ lat: hike.lat, lng: hike.lng }}
             onClick={() => {
               if (selectedHike) setSelectedHike(null);
@@ -73,12 +74,13 @@ function Map(props) {
 
   return (
     <div>
-      <GoogleMap defaultZoom={15} defaultCenter={center} mapTypeId={"terrain"}>
+      <GoogleMap defaultZoom={15} center={center} mapTypeId={"terrain"}>
         <Marker
           position={center}
+          title={props.hike.trailheadName}
           onClick={() => {
-              if (selectedHike) setSelectedHike(null);
-              setSelectedHike(props.hike);
+            if (selectedHike) setSelectedHike(null);
+            setSelectedHike(props.hike);
           }}
           icon={{
             url: "/blue_marker.png",
@@ -109,7 +111,7 @@ function Map(props) {
                 </Link>
               </p>
               <p>Round trip: {selectedHike.distance} miles</p>
-              <p>Elevation gain: {selectedHike.elevationGain} feet</p>
+              <p>Elevation gain: {selectedHike.elevationGain.toLocaleString()} feet</p>
               <p>{selectedHike.description}</p>
             </div>
           </InfoWindow>

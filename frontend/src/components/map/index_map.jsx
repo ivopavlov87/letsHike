@@ -23,6 +23,7 @@ function Map(props) {
           <Marker
             key={`${hike.id}-marker`}
             position={{ lat: hike.lat, lng: hike.lng }}
+            title={hike.trailheadName}
             onClick={() => {
               if (selectedHike) setSelectedHike(null);
               setSelectedHike(hike);
@@ -37,16 +38,26 @@ function Map(props) {
               lat: selectedHike.lat,
               lng: selectedHike.lng
             }}
+            
             onCloseClick={() => {
               setSelectedHike(null);
-              props.revertCenter();
+              // props.revertCenter();
             }}
           >
             <div>
-              <h4><Link to={`/hikes/${selectedHike.id}`}>{selectedHike.trailheadName}</Link></h4>
-              <p>Submitted by: <Link to={`/users/${selectedHike.user._id}`}>{selectedHike.user.username}</Link></p>
+              <h4>
+                <Link to={`/hikes/${selectedHike.id}`}>
+                  {selectedHike.trailheadName}
+                </Link>
+              </h4>
+              <p>
+                Submitted by:{" "}
+                <Link to={`/users/${selectedHike.user._id}`}>
+                  {selectedHike.user.username}
+                </Link>
+              </p>
               <p>Round trip: {selectedHike.distance} miles</p>
-              <p>Elevation gain: {selectedHike.elevationGain} feet</p>
+              <p>Elevation gain: {selectedHike.elevationGain.toLocaleString()} feet</p>
               <p>{selectedHike.description}</p>
             </div>
           </InfoWindow>

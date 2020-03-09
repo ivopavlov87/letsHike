@@ -29,15 +29,15 @@ class LoginForm extends React.Component {
     document.getElementById("login-input").focus();
     for (let i = 1; i <= demoUser.username.length; i++) {
       this.setState({ loginInput: demoUser.username.substr(0, i) });
-      await sleep(250);
+      await sleep(150);
     }
 
-    await sleep(250);
+    await sleep(150);
 
     document.getElementById("password-input").focus();
     for (let i = 1; i <= demoUser.password.length; i++) {
       this.setState({ password: demoUser.password.substr(0, i) });
-      await sleep(250);
+      await sleep(150);
     }
 
     await sleep(500);
