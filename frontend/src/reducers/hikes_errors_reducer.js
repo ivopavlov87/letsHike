@@ -1,6 +1,6 @@
 import {
   RECEIVE_HIKE_ERRORS,
-  RECEIVE_NEW_HIKE,
+  RECEIVE_HIKE,
   CLEAR_ERRORS
 } from "../actions/hike_actions";
 
@@ -11,7 +11,7 @@ const HikesErrorsReducer = (state = _nullErrors, action) => {
   switch (action.type) {
     case RECEIVE_HIKE_ERRORS:
       return action.errors;
-    case RECEIVE_NEW_HIKE:
+    case RECEIVE_HIKE:
       return _nullErrors;
     case CLEAR_ERRORS:
       return _nullErrors;

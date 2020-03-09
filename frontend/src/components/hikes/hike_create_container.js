@@ -5,10 +5,10 @@ import HikeCreate from "./hike_create";
 const mapStateToProps = (state, ownProps) => {
   return {
     currentUser: state.session.user,
-    newHike: Object.values(state.hikes.new)[0],
     errors: state.errors.hikes,
-    hike: state.hikes.all[ownProps.match.params.hikeId],
-    hikes: Object.values(state.hikes.all)
+    hikeId: ownProps.match.params.hikeId,
+    hike: state.hikes[ownProps.match.params.hikeId],
+    hikes: Object.values(state.hikes)
   };
 };
 
