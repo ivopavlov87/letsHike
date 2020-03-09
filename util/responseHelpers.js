@@ -37,8 +37,8 @@ const formatUser = user => {
   const userData = {
     id: user.id,
     username: user.username,
-    email: user.email,
-    adminType: user.adminType,
+    // email: user.email,
+    // adminType: user.adminType,
     hikes: user.hikes
   };
   return userData;

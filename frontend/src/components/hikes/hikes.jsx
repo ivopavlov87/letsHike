@@ -45,7 +45,7 @@ class Hikes extends React.Component {
           <button onClick={this.revertCenter}>Reset Map</button>
           <div style={{ height: `750px`, width: `100%` }}>
             <IndexMap
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places`} //&key=${process.env.REACT_APP_GOOGLE_KEY}`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: `100%`, width: `100%` }} />}
               mapElement={<div style={{ height: `100%` }} />}

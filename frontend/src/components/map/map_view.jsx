@@ -36,6 +36,7 @@ function Map(props) {
   return (
     <div>
       <GoogleMap defaultZoom={15} center={center} mapTypeId={"terrain"}>
+        {otherHikeMarkers}
         <Marker
           position={center}
           title={props.hike.trailheadName}
@@ -48,7 +49,6 @@ function Map(props) {
             scaledSize: new window.google.maps.Size(60, 60)
           }}
         />
-        {otherHikeMarkers}
         {selectedHike && (
           <InfoWindow
             position={{
@@ -72,7 +72,10 @@ function Map(props) {
                 </Link>
               </p>
               <p>Round trip: {selectedHike.distance} miles</p>
-              <p>Elevation gain: {selectedHike.elevationGain.toLocaleString()} feet</p>
+              <p>
+                Elevation gain: {selectedHike.elevationGain.toLocaleString()}{" "}
+                feet
+              </p>
               <p>{selectedHike.description}</p>
             </div>
           </InfoWindow>

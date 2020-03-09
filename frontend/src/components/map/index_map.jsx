@@ -38,7 +38,6 @@ function Map(props) {
               lat: selectedHike.lat,
               lng: selectedHike.lng
             }}
-            
             onCloseClick={() => {
               setSelectedHike(null);
               // props.revertCenter();
