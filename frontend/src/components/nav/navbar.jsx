@@ -27,6 +27,8 @@ class NavBar extends React.Component {
     } else {
       return (
         <div>
+          <Link to={"/"}>All Hikes</Link>&nbsp;
+          <Link to={"/hikes/new"}>New Hike</Link>&nbsp;
           <Link to={"/signup"}>Signup</Link>&nbsp;
           <Link to={"/login"}>Login</Link>
         </div>
