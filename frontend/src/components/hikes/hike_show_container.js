@@ -7,9 +7,8 @@ const mapStateToProps = (state, ownProps) => {
     currentUser: state.session.user,
     errors: state.errors.hikes,
     hikeId: ownProps.match.params.hikeId,
-    hike: state.hikes.all[ownProps.match.params.hikeId],
-    hikes: Object.values(state.hikes.all),
-    // coords: { lat: 47.7898, lng: -121.1009 }
+    hike: state.hikes[ownProps.match.params.hikeId],
+    hikes: Object.values(state.hikes)
   };
 };
 

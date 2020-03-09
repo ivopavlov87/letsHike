@@ -12,18 +12,14 @@ class HikeBox extends React.Component {
       (this.props.currentUser && this.props.hike &&
       (this.props.hike.user._id === this.props.currentUser.id)) ||
 
-      // below conditional is for when a new hike is created
-      (this.props.currentUser && this.props.hike &&
-      (this.props.hike.user === this.props.currentUser.id)) ||
-
       // admin user power
       (this.props.currentUser.adminType && this.props.hike)
     ) {
       deleteButton = (
         <div>
-          <Link to={this.props.deleteDestination} onClick={() => this.props.deleteHike(this.props.hike._id || this.props.hike.id)}>Delete Hike</Link>
-          &nbsp;
-          <Link to={`/hikes/${this.props.hike._id || this.props.hike.id}/edit`}>Update Hike</Link>
+          <Link to={this.props.deleteDestination} onClick={() => this.props.deleteHike(this.props.hike.id)}>Delete Hike</Link>
+          {' '}
+          <Link to={`/hikes/${this.props.hike.id}/edit`}>Update Hike</Link>
         </div>
       );
     }
@@ -32,17 +28,14 @@ class HikeBox extends React.Component {
       return (
         <div>
           <h3>
-            <Link to={`/hikes/${this.props.hike.id || this.props.hike._id}`}>
+            <Link to={`/hikes/${this.props.hike.id}`}>
               {this.props.hike.trailheadName}
             </Link>
           </h3>
           <h3>
             Hike submitted by:&nbsp;
-            <Link
-              to={`/users/${this.props.hike.user._id ||
-                this.props.currentUser.id}`}
-            >
-              {this.props.hike.user.username || this.props.currentUser.username}
+            <Link to={`/users/${this.props.hike.user._id}`}>
+              {this.props.hike.user.username}
             </Link>
           </h3>
           <h3>{this.props.hike.state}</h3>

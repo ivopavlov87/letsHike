@@ -5,7 +5,7 @@ import Hikes from "./hikes";
 const mapStateToProps = state => {
   return {
     currentUser: state.session.user,
-    hikes: Object.values(state.hikes.all)
+    hikes: Object.values(state.hikes)
   };
 };
 

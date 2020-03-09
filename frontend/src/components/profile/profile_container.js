@@ -5,7 +5,7 @@ import Profile from "./profile";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    hikes: Object.values(state.hikes.user),
+    hikes: Object.values(state.hikes),
     currentUser: state.session.user,
     user: state.users[ownProps.match.params.id],
     userId: ownProps.match.params.id,
