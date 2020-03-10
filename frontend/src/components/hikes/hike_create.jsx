@@ -191,6 +191,8 @@ class HikeCompose extends React.Component {
             <br />
             <input
               type="text"
+              minLength="5"
+              maxLength="140"
               value={this.state.trailheadName}
               onChange={this.update("trailheadName")}
               placeholder="Name of the trailhead"
@@ -285,6 +287,7 @@ class HikeCompose extends React.Component {
             <br />
             <input
               type="textarea"
+              minLength="5"
               maxLength="1000"
               value={this.state.description}
               onChange={this.update("description")}

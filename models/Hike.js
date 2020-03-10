@@ -6,11 +6,19 @@ const HikeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User"
   },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review"
+    }
+  ],
   trailheadName: {
     type: String,
     required: true,
     index: true,
-    unique: true
+    unique: true,
+    minlength: 5,
+    maxlength: 140
   },
   state: {
     type: String,
@@ -34,7 +42,9 @@ const HikeSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5,
+    maxlength: 1000
   },
   date: {
     type: Date,

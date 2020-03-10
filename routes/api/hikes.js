@@ -125,11 +125,11 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
 
-    Hike.findById(req.params.id).then(hike => {
+    Hike.findById(req.params.id).then(hikeToDelete => {
       // This removes hike from the owner-user object's
       // "hikes" array, i.e., the hikes they've made
-      User.findById(hike.user).then(user => {
-        user.hikes.splice(user.hikes.indexOf(hike._id), 1);
+      User.findById(hikeToDelete.user).then(user => {
+        user.hikes = user.hikes.filter(userHike => hikeToDelete._id.toString() !== userHike.toString());
         user.save();
       });
 

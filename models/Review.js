@@ -10,9 +10,17 @@ const ReviewSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Hike"
   },
+  title: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 140
+  },
   body: {
     type: String,
-    required: true
+    required: true,
+    minlength: 5,
+    maxlength: 1000
   },
   rating: {
     type: Number,

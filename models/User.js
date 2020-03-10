@@ -25,6 +25,10 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Hike"
   }],
+  reviews: [{
+    type: Schema.Types.ObjectId,
+    ref: "Review"
+  }],
   date: {
     type: Date,
     default: Date.now
