@@ -45,7 +45,7 @@ function Map(props) {
   return (
     <LoadScript
       id="script-loader"
-      googleMapsApiKey={process.env.REACT_APP_GOOGLE_KEY}
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE1_KEY}
       loadingElement={<div style={{ height: "100%" }} />}
       className="map-loading-script"
     >
