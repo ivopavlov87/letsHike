@@ -5,9 +5,9 @@ import Profile from "./profile";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    hikes: Object.values(state.hikes),
+    hikes: Object.values(state.entities.hikes),
     currentUser: state.session.user,
-    user: state.users[ownProps.match.params.id],
+    user: state.entities.users[ownProps.match.params.id],
     userId: ownProps.match.params.id,
   };
 };
