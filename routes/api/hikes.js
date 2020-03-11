@@ -6,6 +6,7 @@ const { formatHikes, formatHike } = require('../../util/responseHelpers')
 
 const Hike = require("../../models/Hike");
 const User = require("../../models/User");
+const Review = require("../../models/Review");
 const validateHikeInput = require("../../validation/hike");
 
 // This is for all hikes
@@ -127,10 +128,33 @@ router.delete(
 
     Hike.findById(req.params.id).then(hikeToDelete => {
       // This removes hike from the owner-user object's
-      // "hikes" array, i.e., the hikes they've made
+      // "hikes" array, i.e., the hikes they've made;
+      // Grab the owner ID from the hike's user field
+      // and find the user
       User.findById(hikeToDelete.user).then(user => {
+        // remove from the creators hikes array
         user.hikes = user.hikes.filter(userHike => hikeToDelete._id.toString() !== userHike.toString());
+        // save the changes
         user.save();
+      });
+
+      // Delete reviews associated with the hike to be deleted,
+      // and remove the reviews from their author's "reviews"
+      // array; start with each reviewId in the hike's reviews array
+      hikeToDelete.reviews.forEach(reviewToDeleteId => {
+        // Get the review
+        Review.findById(reviewToDeleteId).then(reviewToDelete => {
+          // Get the user that wrote the review
+          User.findById(reviewToDelete.user).then(reviewAuthor => {
+            // Remove the review from the author's reviews array
+            reviewAuthor.reviews = reviewAuthor.reviews.filter(userReview => reviewToDeleteId.toString() !== userReview.toString());
+            // save the change
+            reviewAuthor.save();
+          });
+        });
+
+        // Finally, delete the review
+        Review.findByIdAndRemove(reviewToDeleteId, () => console.log('one review deleted'));
       });
 
       // This removes the hike from the database

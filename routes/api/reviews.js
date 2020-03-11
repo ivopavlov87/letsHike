@@ -27,7 +27,7 @@ router.post(
         if (review) {
           // Use the validations to send the error
           errors.registration =
-            "A review for this hike, with this title, already exists. Please re-title your review.";
+            "A review for this hike, with this title, already exists. Please re-title your review. Note: Great Hike, great hike, GrEaT hIke, GREAT HIKE, etc., are all equivalent.";
           return res.status(400).json(errors);
         }
 
@@ -64,6 +64,45 @@ router.post(
           return res.json(formatReview(newReview))
         });
       });
+  }
+);
+
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+
+    Review.findById(req.params.id).then(reviewToDelete => {
+      // This removes review from the owner-user document's
+      // "reviews" array, i.e., the reviews they've made
+      User.findById(reviewToDelete.user).then(user => {
+        user.reviews = user.reviews.filter(userReview => reviewToDelete._id.toString() !== userReview.toString());
+        user.save();
+      });
+
+      // This removes the review from the reviewed hike document's
+      // "reviews" array, i.e., the hike that the review
+      // belongs to
+      Hike.findById(reviewToDelete.hike).then(hike => {
+        hike.reviews = hike.reviews.filter(hikeReview => reviewToDelete._id.toString() !== hikeReview.toString());
+        hike.save();
+      });
+
+      // This removes the review from the database
+      Review.findByIdAndRemove(req.params.id, (err, review) => {
+        if (!review) {
+          return res
+            .status(404)
+            .json({ noReviewFound: "No review found with that ID" });
+        } else {
+          const response = {
+            message: "Review successfully deleted",
+            id: req.params.id
+          };
+          return res.status(200).json(response);
+        }
+      });
+    });
   }
 );
 
