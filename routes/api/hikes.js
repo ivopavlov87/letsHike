@@ -147,14 +147,14 @@ router.delete(
           // Get the user that wrote the review
           User.findById(reviewToDelete.user).then(reviewAuthor => {
             // Remove the review from the author's reviews array
-            reviewAuthor.reviews = reviewAuthor.reviews.filter(userReview => reviewToDeleteId.toString() !== userReview.toString());
+            reviewAuthor.reviews = reviewAuthor.reviews.filter(userReview => reviewToDelete._id.toString() !== userReview.toString());
             // save the change
             reviewAuthor.save();
           });
-        });
 
-        // Finally, delete the review
-        Review.findByIdAndRemove(reviewToDeleteId, () => console.log('one review deleted'));
+          // Finally, delete the review
+          Review.findByIdAndRemove(reviewToDeleteId, () => console.log('one review deleted'));
+        });
       });
 
       // This removes the hike from the database
