@@ -16,6 +16,11 @@ const ReviewSchema = new Schema({
     minlength: 5,
     maxlength: 140
   },
+  perHikeTitle: {
+    type: String,
+    minlength: 5,
+    maxlength: 140
+  },
   body: {
     type: String,
     required: true,

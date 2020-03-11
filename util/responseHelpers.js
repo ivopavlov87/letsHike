@@ -10,7 +10,7 @@ const formatHikes = hikesArr => {
       lng: hike.lng,
       distance: hike.distance,
       elevationGain: hike.elevationGain,
-      description: hike.description,
+      description: hike.description
     };
     hikes[hike.id] = hikeData;
   });
@@ -44,4 +44,35 @@ const formatUser = user => {
   return userData;
 };
 
-module.exports = { formatHikes, formatHike, formatUser }
+const formatReviews = reviewsArr => {
+  const reviews = {};
+  reviewsArr.forEach(review => {
+    const reviewData = {
+      id: review.id,
+      user: review.user,
+      hike: review.hike,
+      title: review.title,
+      body: review.body,
+      rating: review.rating,
+      date: review.date
+    };
+    reviews[review.id] = reviewData;
+  });
+
+  return reviews;
+};
+
+const formatReview = review => {
+  const reviewData = {
+    id: review.id,
+    user: review.user,
+    hike: review.hike,
+    title: review.title,
+    body: review.body,
+    rating: review.rating,
+    date: review.date
+  };
+  return reviewData;
+};
+
+module.exports = { formatHikes, formatHike, formatUser, formatReview, formatReviews }

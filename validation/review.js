@@ -16,12 +16,8 @@ module.exports = function validateReviewInput(data) {
     errors.body = "Review body must be between 5 and 1000 characters";
   }
 
-  if (Validator.isEmpty(data.rating)) {
-    errors.rating = "Rating value is required";
-  }
-
-  if (Validator.isNumeric(data.rating)) {
-    errors.rating = "Rating value must be a whole number between 1 (bad) and 5 (amazing)";
+  if (Validator.isEmpty(data.rating.toString())) {
+    errors.rating = "Rating value is required and must be a whole number between 1 (bad) and 5 (amazing)";
   }
 
   return {
