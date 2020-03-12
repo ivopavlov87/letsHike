@@ -35,7 +35,7 @@ class ReviewCompose extends React.Component {
         // if there are ANY errors, display them
         this.setState({ errors: this.props.errors });
       } else {
-        // if no errors, hike has been created, clear
+        // if no errors, review has been created, clear
         // any existing errors
         this.props.clearErrors();
 
