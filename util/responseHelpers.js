@@ -49,6 +49,7 @@ const formatReviews = reviewsArr => {
   reviewsArr.forEach(review => {
     const reviewData = {
       id: review.id,
+      author: review.author,
       user: review.user,
       hike: review.hike,
       title: review.title,
@@ -65,6 +66,7 @@ const formatReviews = reviewsArr => {
 const formatReview = review => {
   const reviewData = {
     id: review.id,
+    author: review.author,
     user: review.user,
     hike: review.hike,
     title: review.title,

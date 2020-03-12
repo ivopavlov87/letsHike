@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import HikeBox from "./hike_box";
 import Map from "../map/map_view"
+import ReviewCompose from "../reviews/review_compose_container"
 
 class HikeShow extends React.Component {
 
@@ -16,10 +17,7 @@ class HikeShow extends React.Component {
         <div>
           <div style={{ height: `500px`, width: `100%` }}>
             Map Goes Here
-            <Map
-              hike={this.props.hike}
-              hikes={this.props.hikes}
-            />
+            <Map hike={this.props.hike} hikes={this.props.hikes} />
           </div>
           <HikeBox
             hike={this.props.hike}
@@ -30,6 +28,10 @@ class HikeShow extends React.Component {
                 : this.props.currentUser.id
             }`}
             deleteHike={this.props.deleteHike}
+          />
+          <ReviewCompose
+            hike={this.props.hike}
+            currentUser={this.props.currentUser}
           />
         </div>
       );

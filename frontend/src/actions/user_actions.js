@@ -8,5 +8,7 @@ const receiveUser = user => ({
 });
 
 export const fetchUser = (id) => dispatch => {
-  return UserAPIUtil.getUser(id).then(user => dispatch(receiveUser(user))).catch(err => console.log(err));
+  return UserAPIUtil.getUser(id)
+    .then(user => dispatch(receiveUser(user)))
+    .catch(err => console.log(err));
 }
