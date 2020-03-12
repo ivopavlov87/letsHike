@@ -35,6 +35,7 @@ router.post(
         const newReview = new Review({
           user: req.body.user,
           hike: req.body.hike,
+          author: req.body.author,
           title: req.body.title,
           body: req.body.body,
           rating: req.body.rating,

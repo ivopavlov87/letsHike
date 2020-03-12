@@ -172,21 +172,6 @@ router.delete(
         }
       });
     });
-
-    // BACKUP DELETE ROUTE FUNCTIONALITY
-    // Hike.findByIdAndRemove(req.params.id, (err, hike) => {
-    //   if (!hike) {
-    //     return res
-    //       .status(404)
-    //       .json({ noHikeFound: "No hike found with that ID" });
-    //   } else {
-    //     const response = {
-    //       message: "Hike successfully deleted",
-    //       id: req.params.id
-    //     };
-    //     return res.status(200).json(response);
-    //   }
-    // });
   }
 );
 

@@ -16,10 +16,12 @@ const ReviewSchema = new Schema({
     minlength: 5,
     maxlength: 140
   },
-  perHikeTitle: {
+  author: {
     type: String,
-    minlength: 5,
-    maxlength: 140
+    required: true
+  },
+  perHikeTitle: {
+    type: String
   },
   body: {
     type: String,
