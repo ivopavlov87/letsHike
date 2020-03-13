@@ -2,12 +2,43 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
-const { formatHike, formatReviews, formatReview } = require("../../util/responseHelpers");
+const { formatReviews, formatReview } = require("../../util/responseHelpers");
 
 const Hike = require("../../models/Hike");
 const User = require("../../models/User");
 const Review = require("../../models/Review");
 const validateReviewInput = require("../../validation/review");
+
+// Get one review
+router.get('/:id', (req, res) => {
+  Review.findById(req.params.id)
+    .populate({ path: "hike", model: "Hike", select: "trailheadName" })
+    .then(review => res.json(formatReview(review)))
+    .catch(err =>
+      res.status(404).json({ noReviewFound: "No review found with that ID" })
+    );
+});
+
+// Get all reviews for a specific hike
+router.get('/hike/:hikeId', (req, res) => {
+  Review.find({ hike: req.params.hikeId })
+    .sort({ date: -1 })
+    .then(reviews => res.json(formatReviews(reviews)))
+    .catch(err => 
+      res.status(404).json({ noReviewsFound: 'No reviews found for that hike' })
+    );
+});
+
+// Get all reviews from a specific user
+router.get('/user/:userId', (req, res) => {
+  Review.find({ user: req.params.userId })
+    .populate({ path: "hike", model: "Hike", select: "trailheadName" })
+    .sort({ date: -1 })
+    .then(reviews => res.json(formatReviews(reviews)))
+    .catch(err =>
+      res.status(404).json({ noReviewsFound: 'No reviews found from that user' })  
+    )
+});
 
 // This is to make a new review
 router.post(
@@ -68,6 +99,7 @@ router.post(
   }
 );
 
+// This is to delete a review
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),

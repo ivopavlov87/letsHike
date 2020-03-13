@@ -67,7 +67,7 @@ class ReviewCompose extends React.Component {
 
   render() {
 
-    if (!this.props.currentUser.id) {
+    if (!this.props.currentUser) {
       return <Link to={"/login"}>You must be logged in to leave a review</Link>;
     } else {
       return (
@@ -97,8 +97,9 @@ class ReviewCompose extends React.Component {
                 <option value={5}>5 - Amazing</option>
               </select>
               <br />
-              <input
-                type="textarea"
+              <textarea
+                rows="6"
+                cols="60"
                 minLength="5"
                 maxLength="1000"
                 value={this.state.body}

@@ -13,7 +13,7 @@ class HikeBox extends React.Component {
       (this.props.hike.user._id === this.props.currentUser.id)) ||
 
       // admin user power
-      (this.props.currentUser.adminType && this.props.hike)
+      (this.props.currentUser && this.props.currentUser.adminType && this.props.hike)
     ) {
       deleteButton = (
         <div>
