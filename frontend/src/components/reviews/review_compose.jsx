@@ -67,7 +67,9 @@ class ReviewCompose extends React.Component {
 
   render() {
 
-    if (!this.props.currentUser) {
+    console.log(this.props)
+
+    if (!this.props.userAuthenticated) {
       return <Link to={"/login"}>You must be logged in to leave a review</Link>;
     } else {
       return (

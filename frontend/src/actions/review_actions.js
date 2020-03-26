@@ -60,6 +60,12 @@ export const fetchHikeReviews = id => dispatch => {
     .catch(err => console.log(err))
 }
 
+export const updateReview = review => dispatch => {
+  return ReviewAPIUtil.editReview(review)
+    .then(review => dispatch(receiveReview(review)))
+    .catch(err => dispatch(receiveReviewErrors(err.response.data)))
+}
+
 export const deleteReview = reviewId => dispatch => {
   return ReviewAPIUtil.deleteReview(reviewId)
     .then((review) => dispatch(removeReview(reviewId)))

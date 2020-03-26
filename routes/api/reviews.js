@@ -99,6 +99,38 @@ router.post(
   }
 );
 
+// Update a review
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Some typecasting is required to run fields
+    // through Validator
+    req.body.rating = req.body.rating.toString();
+    Review.findById(req.params.id)
+      .then(review => {
+        const { errors, isValid } = validateReviewInput(req.body);
+
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+
+        // updates the fields in the review
+        review.title = req.body.title,
+        review.body = req.body.body,
+        review.rating = parseInt(req.body.rating),
+        review.perHikeTitle = review.hike.toString() + req.body.title.toLowerCase()
+
+        review.save().then(review => res.json(formatReview(review)));
+      })
+      .catch(err => {
+        return res
+          .status(404)
+          .json({ noReviewFound: "No review found with that ID" });
+      });
+  }
+);
+
 // This is to delete a review
 router.delete(
   "/:id",

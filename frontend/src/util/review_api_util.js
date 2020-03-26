@@ -16,6 +16,10 @@ export const getHikeReviews = id => {
   return axios.get(`/api/reviews/hike/${id}`)
 }
 
+export const editReview = review => {
+  return axios.patch(`/api/reviews/${review.id}/edit`)
+}
+
 export const deleteReview = id => {
   return axios.delete(`/api/reviews/${id}`)
 }

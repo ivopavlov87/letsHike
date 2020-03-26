@@ -5,6 +5,7 @@ import ReviewCompose from "./review_compose";
 const mapStateToProps = (state, ownProps) => {
   return {
     currentUser: state.session.user,
+    userAuthenticated: state.session.isAuthenticated,
     errors: state.errors.reviews,
     reviewId: ownProps //.match.params.reviewId,
     // review: state.entities.reviews[ownProps.match.params.reviewId]
